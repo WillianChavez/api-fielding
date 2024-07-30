@@ -1,0 +1,47 @@
+version: '3'
+services:
+  # Service for development
+  backend-dev:
+    image: backend-apifielding-dev
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+      target: '${TARGET:-development}'
+    ports:
+      - '${PORT:-3000}:3000'
+    depends_on:
+      - database
+    volumes:
+      - .:/app
+
+  database:
+    container_name: database-apifielding
+    image: postgres:16.3-alpine3.20
+    ports:
+      - '${DB_PORT_DOCKER:-5432}:5432'
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: '${DB_USER:-postgres}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD:-postgres}'
+      POSTGRES_DB: '${DB_NAME:-postgres}'
+    volumes:
+      - database:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadmin-apifielding
+    image: dpage/pgadmin4
+    ports:
+      - '${PGADMIN_PORT:-5050}:80'
+    depends_on:
+      - database
+    environment:
+      PGADMIN_DEFAULT_EMAIL: '${PGADMIN_DEFAULT_EMAIL:-admin@root.com}'
+      PGADMIN_DEFAULT_PASSWORD: '${PGADMIN_DEFAULT_PASSWORD:-admin}'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+
+volumes:
+  database:
+    external: false
+  pgadmin:
+    external: false
