@@ -16,6 +16,7 @@ export default registerAs('', () => ({
     database: process.env.DB_NAME,
     logging: process.env.DB_LOGGER !== 'false' ? console.log : false,
   },
+  autoloadModels: process.env.DB_AUTOLOAD_MODELS === 'true',
 
   appDebug: process.env.DB_DIALECT,
 }));
