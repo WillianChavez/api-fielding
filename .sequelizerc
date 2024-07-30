@@ -1,0 +1,4 @@
+module.exports = {
+  'config': './src/shared/database/connection/config.js',
+  'models-path': './dist/**/*.model.js',
+};
