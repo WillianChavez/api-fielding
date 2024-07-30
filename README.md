@@ -32,6 +32,12 @@
 $ npm install
 ```
 
+Enabled husky exec
+
+```bash
+ $ chmod ug+x .husky/*    
+```
+
 ## Running the app
 
 ```bash
