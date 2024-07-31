@@ -20,6 +20,6 @@ import { FindSongUseCase } from './application/find-song-use-case/find-song-use-
       useExisting: RelationalSongRepository,
     },
   ],
-  exports: [CreateSongUseCase, SequelizeModule],
+  exports: [CreateSongUseCase, FindSongUseCase],
 })
 export class SongModule {}
