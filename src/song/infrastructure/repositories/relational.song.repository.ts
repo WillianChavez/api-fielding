@@ -45,10 +45,6 @@ export class RelationalSongRepository extends SongRepository {
   async findOne(id: string): Promise<Song> {
     const songRes = await this.songModel.findByPk(id);
 
-    if (!songRes) {
-      return null;
-    }
-
     return new Song({
       id: songRes.id,
       name: songRes.name,
