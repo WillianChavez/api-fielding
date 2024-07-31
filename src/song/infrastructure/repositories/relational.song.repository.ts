@@ -10,8 +10,20 @@ export class RelationalSongRepository extends SongRepository {
     super();
   }
 
+  async findByName(name: string): Promise<Song> {
+    const songRes = await this.songModel.findOne({ where: { name } });
+    const song: Song = new Song({
+      id: songRes.id,
+      name: songRes.name,
+      artist: songRes.artist,
+      album: songRes.album,
+    });
+
+    return song;
+  }
+
   async create(song: Song): Promise<Song> {
-    await this.songModel.create(song);
+    await this.songModel.create(song.toValue());
     return song;
   }
 

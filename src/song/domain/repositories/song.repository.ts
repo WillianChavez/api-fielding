@@ -6,4 +6,5 @@ export abstract class SongRepository {
   abstract delete(id: string): Promise<void>;
   abstract findAll(): Promise<Song[]>;
   abstract findOne(id: string): Promise<Song>;
+  abstract findByName(name: string): Promise<Song>;
 }
