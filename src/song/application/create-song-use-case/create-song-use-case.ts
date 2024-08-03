@@ -1,10 +1,10 @@
-import { PrimitiveSong, Song } from 'src/song/domain/entities/song.entity';
+import { PrimitiveSong, Song } from './../../domain/entities/song.entity';
 import { CreateSongDto } from './create-song.dto';
-import { SongRepository } from 'src/song/domain/repositories/song.repository';
-import { Injectable } from 'src/shared/dependencies/injectable';
-import { SongAlreadyExistException } from 'src/song/domain/exceptions/song-already.exist.exception';
-import { MailerService } from '@nestjs-modules/mailer';
-import { Transactional } from 'sequelize-transactional-decorator';
+import { SongRepository } from './../../domain/repositories/song.repository';
+import { Injectable } from './../../../shared/dependencies/injectable';
+import { SongAlreadyExistException } from './../../domain/exceptions/song-already.exist.exception';
+import { MailerService } from './../../domain/services/mailer.service';
+import { Transactional } from './../../../shared/dependencies/transactional';
 
 @Injectable()
 export class CreateSongUseCase {
@@ -22,15 +22,15 @@ export class CreateSongUseCase {
     }
     const song = Song.create(createSongDto);
 
-    await this.songRepository.create(song);
+    const songCreated: Song = await this.songRepository.create(song);
 
     await this.mailerService.sendMail({
-      to: 'test@gmail.com',
-      subject: 'Song created',
-      template: './welcome',
-      context: song.toValue(),
+      context: songCreated.toValue(),
+      subject: 'New song created',
+      template: 'welcome',
+      to: 'test@mail.com',
     });
 
-    return { song: song.toValue() };
+    return { song: songCreated.toValue() };
   }
 }
