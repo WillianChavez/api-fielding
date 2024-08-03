@@ -4,6 +4,7 @@ import { SongRepository } from './../../domain/repositories/song.repository';
 import { Injectable } from './../../../shared/dependencies/injectable';
 import { SongAlreadyExistException } from './../../domain/exceptions/song-already.exist.exception';
 import { MailerService } from './../../domain/services/mailer.service';
+import { Transactional } from './../../../shared/dependencies/transactional';
 
 @Injectable()
 export class CreateSongUseCase {
@@ -12,6 +13,7 @@ export class CreateSongUseCase {
     private readonly mailerService: MailerService,
   ) {}
 
+  @Transactional()
   async run(createSongDto: CreateSongDto): Promise<{ song: PrimitiveSong }> {
     const songExists = await this.songRepository.findByName(createSongDto.name);
 
@@ -20,15 +22,15 @@ export class CreateSongUseCase {
     }
     const song = Song.create(createSongDto);
 
-    await this.songRepository.create(song);
+    const songCreated: Song = await this.songRepository.create(song);
 
     await this.mailerService.sendMail({
-      context: song.toValue(),
+      context: songCreated.toValue(),
       subject: 'New song created',
-      template: 'new-song',
+      template: 'welcome',
       to: 'test@mail.com',
     });
 
-    return { song: song.toValue() };
+    return { song: songCreated.toValue() };
   }
 }
