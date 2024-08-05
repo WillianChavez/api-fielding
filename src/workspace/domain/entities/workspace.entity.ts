@@ -4,9 +4,9 @@ import { Collaborator } from './collaborator.entity';
 export interface PrimitiveWorkspace {
   id: string;
   name: string;
-  count_collaborators?: number;
+  count_collaborators: number;
   link_hash?: string;
-  collaborators?: Collaborator[];
+  collaborators: Collaborator[];
 }
 
 export class Workspace {
@@ -14,12 +14,13 @@ export class Workspace {
 
   static create(data: {
     name: string;
-    collaborators?: Collaborator[];
+    collaborators: Collaborator[];
   }): Workspace {
     return new Workspace({
       id: uuidv4(),
       name: data.name,
-      collaborators: data?.collaborators || [],
+      count_collaborators: data.collaborators.length,
+      collaborators: data.collaborators,
     });
   }
 

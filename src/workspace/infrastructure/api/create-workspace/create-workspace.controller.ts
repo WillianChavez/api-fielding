@@ -17,10 +17,10 @@ export class CreateWorkspaceController {
   constructor(private createWorkspaceUseCase: CreateWorkspaceUseCase) {}
 
   @Post()
-  async create(@Body() createWorkspaceDto: CreateWorkspaceHttpDto) {
+  async run(@Body() createWorkspaceDto: CreateWorkspaceHttpDto) {
     try {
       const workspace =
-        await this.createWorkspaceUseCase.execute(createWorkspaceDto);
+        await this.createWorkspaceUseCase.run(createWorkspaceDto);
       return workspace;
     } catch (error) {
       if (error instanceof RoleNoExistException) {

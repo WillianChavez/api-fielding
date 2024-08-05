@@ -18,7 +18,7 @@ export class CreateWorkspaceUseCase {
   ) {}
 
   @Transactional()
-  async execute(
+  async run(
     createWorkspaceDto: CreateWorkspaceDto,
   ): Promise<{ workspace: PrimitiveWorkspace }> {
     const idsInvalid = await this.roleRepository.findExistByIds(
@@ -40,7 +40,7 @@ export class CreateWorkspaceUseCase {
     );
     const workspace = Workspace.create({
       name: createWorkspaceDto.name,
-      collaborators,
+      collaborators: collaborators || [],
     });
 
     const workspaceCreated: Workspace =

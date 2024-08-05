@@ -6,7 +6,10 @@ import {
   PrimaryKey,
   Table,
   Model,
+  BelongsToMany,
 } from 'sequelize-typescript';
+import RoleModel from './role.model';
+import RolePermissionModel from './role.permission.model';
 
 @Table({
   tableName: 'ctl_permission',
@@ -34,6 +37,9 @@ export default class PermissionModel extends Model<PermissionModel> {
     allowNull: true,
   })
   description: string;
+
+  @BelongsToMany(() => RoleModel, () => RolePermissionModel)
+  roles: RoleModel[];
 
   @CreatedAt
   created_at: Date;
