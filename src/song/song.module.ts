@@ -8,6 +8,8 @@ import { RelationalSongRepository } from './infrastructure/repositories/relation
 import { SongRepository } from './domain/repositories/song.repository';
 import { FindSongController } from './infrastructure/api/find-song/find-song.controller';
 import { FindSongUseCase } from './application/find-song-use-case/find-song-use-case';
+import { MailService } from 'src/shared/mailer/services/mailer.services';
+import { MailerService } from './domain/services/mailer.service';
 
 @Module({
   controllers: [CreateSongController, FindSongController],
@@ -16,9 +18,14 @@ import { FindSongUseCase } from './application/find-song-use-case/find-song-use-
     CreateSongUseCase,
     FindSongUseCase,
     RelationalSongRepository,
+    MailService,
     {
       provide: SongRepository,
       useExisting: RelationalSongRepository,
+    },
+    {
+      provide: MailerService,
+      useClass: MailService,
     },
   ],
   exports: [CreateSongUseCase, FindSongUseCase],
