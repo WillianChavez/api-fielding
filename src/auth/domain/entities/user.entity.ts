@@ -6,7 +6,7 @@ export interface PrimitiveUser {
     name: string;
     email: string;
     password:string;
-    createdAt: Date;
+    createdAt?: Date;
     deletedAt?: Date;
     urlPhoto?: string;
 }
@@ -22,7 +22,7 @@ export class User {
             email: data.email,
             password: data.password,
             createdAt: new Date(),
-            deletedAt:null,
+            deletedAt: null,
             urlPhoto: data.urlPhoto ?? null
         });
     }
@@ -39,3 +39,4 @@ export class User {
         };
     }
 }
+
