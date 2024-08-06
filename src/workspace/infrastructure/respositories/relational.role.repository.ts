@@ -16,4 +16,12 @@ export class RelationalRoleRepository extends RoleRepository {
     const roles = await this.roleModel.findAll({ where: { id: ids } });
     return ids.filter((roleId) => !roles.find((role) => role.id === roleId));
   }
+
+  async findExistNameByIds(name: string, ids: string[]): Promise<boolean> {
+    const roles = await this.roleModel.findAll({
+      where: { id: ids, name },
+    });
+
+    return roles.length > 0;
+  }
 }

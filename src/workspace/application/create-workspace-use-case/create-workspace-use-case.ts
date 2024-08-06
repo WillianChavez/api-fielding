@@ -1,4 +1,3 @@
-import { Transactional } from 'sequelize-transactional-decorator';
 import { Injectable } from 'src/shared/dependencies/injectable';
 import { WorkspaceRepository } from 'src/workspace/domain/repositories/workspace.repository';
 import { CreateWorkspaceDto } from './create-workspace.dto';
@@ -6,9 +5,14 @@ import {
   PrimitiveWorkspace,
   Workspace,
 } from 'src/workspace/domain/entities/workspace.entity';
-import { Collaborator } from 'src/workspace/domain/entities/collaborator.entity';
+import {
+  Collaborator,
+  CollaboratorRole,
+} from 'src/workspace/domain/entities/collaborator.entity';
 import { RoleRepository } from 'src/workspace/domain/repositories/role.repository';
 import { RoleNoExistException } from 'src/workspace/domain/exceptions/role-no.exist.exception';
+import { Transactional } from './../../../shared/dependencies/transactional';
+import { RoleNoHaveException } from 'src/workspace/domain/exceptions/role-no.have.exception';
 
 @Injectable()
 export class CreateWorkspaceUseCase {
@@ -21,13 +25,22 @@ export class CreateWorkspaceUseCase {
   async run(
     createWorkspaceDto: CreateWorkspaceDto,
   ): Promise<{ workspace: PrimitiveWorkspace }> {
-    const idsInvalid = await this.roleRepository.findExistByIds(
-      createWorkspaceDto?.collaborators?.map(
-        (collaborator) => collaborator.role,
-      ),
+    const rolesIds = createWorkspaceDto?.collaborators.map(
+      (collaborator) => collaborator.role,
     );
+    const idsInvalid = await this.roleRepository.findExistByIds(rolesIds);
+
     if (idsInvalid.length > 0) {
       throw new RoleNoExistException(idsInvalid.join(', '));
+    }
+
+    const haveRoleAdmin = await this.roleRepository.findExistNameByIds(
+      CollaboratorRole.ADMIN,
+      rolesIds,
+    );
+
+    if (!haveRoleAdmin) {
+      throw new RoleNoHaveException(CollaboratorRole.ADMIN);
     }
 
     const collaborators = createWorkspaceDto?.collaborators?.map(
@@ -40,7 +53,7 @@ export class CreateWorkspaceUseCase {
     );
     const workspace = Workspace.create({
       name: createWorkspaceDto.name,
-      collaborators: collaborators || [],
+      collaborators: collaborators,
     });
 
     const workspaceCreated: Workspace =

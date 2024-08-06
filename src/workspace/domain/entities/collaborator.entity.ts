@@ -6,6 +6,11 @@ export interface PrimitiveCollaborator {
   user: string;
 }
 
+export enum CollaboratorRole {
+  OWNER = 'owner',
+  ADMIN = 'admin',
+  MEMBER = 'member',
+}
 export class Collaborator {
   constructor(private attributes: PrimitiveCollaborator) {}
 

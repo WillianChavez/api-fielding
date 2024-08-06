@@ -1,6 +1,6 @@
 export interface CreateWorkspaceDto {
   name: string;
-  collaborators?: {
+  collaborators: {
     id: string;
     role: string;
   }[];

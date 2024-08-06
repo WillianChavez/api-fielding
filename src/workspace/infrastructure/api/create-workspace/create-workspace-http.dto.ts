@@ -3,7 +3,6 @@ import { Type } from 'class-transformer';
 import {
   IsArray,
   IsNotEmpty,
-  IsOptional,
   IsString,
   IsUUID,
   ValidateNested,
@@ -36,7 +35,6 @@ export class CreateWorkspaceHttpDto {
     },
   })
   @IsArray()
-  @IsOptional()
   @ValidateNested({
     each: true,
   })
