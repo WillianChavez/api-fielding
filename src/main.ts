@@ -9,7 +9,6 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe());
   const configService = app.get(ConfigService);
-
   swaggerInit(app);
 
   const port = configService.get<number>('port', 3000);

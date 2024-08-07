@@ -58,6 +58,10 @@ export class EnviromentVariables {
   DB_LOGGER: boolean;
 
   @IsNotEmpty()
+  @IsBoolean()
+  DB_AUTOLOAD_MODELS: boolean;
+
+  @IsNotEmpty()
   @IsString()
   APP_DEBUG: string;
 
