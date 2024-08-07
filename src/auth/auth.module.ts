@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthController } from './infrastructure/api/auth.controller';
+import { AuthController } from './infrastructure/api/create-user/create-user.controller';
 import { SequelizeModule } from '@nestjs/sequelize';
 import UserModel from './infrastructure/models/user.model';
 

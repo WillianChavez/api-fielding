@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './application/create-user-use-case/create-user.dto';
 import UserModel from './infrastructure/models/user.model';
+import { CreateUserHttpDto } from './infrastructure/api/create-user/create-user-http.dto';
 
 @Injectable()
 export class AuthService {
@@ -10,7 +10,7 @@ export class AuthService {
   constructor(
 
   ) {}
-  create(createUserDto: CreateUserDto) {
+  create(createUserHttpDto: CreateUserHttpDto) {
    try {
      
    } catch (error) {

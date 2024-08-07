@@ -6,7 +6,7 @@ import {
   MinLength,
 } from 'class-validator';
 
-export class pruebaaaa123 {
+export class CreateUserHttpDto {
   @IsString()
   @MinLength(3)
   name: string;
