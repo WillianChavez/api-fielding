@@ -15,47 +15,14 @@ export class RelationalUserRepository extends UserRepository {
     return user;
   }
 
-  async update(id: string, user: User): Promise<User> {
-    const { name, email, password } = user.toValue();
-    await this.userModel.update({ name, email, password }, { where: { id } });
-    return user;
-  }
-
-  async delete(id: string): Promise<void> {
-    await this.userModel.destroy({ where: { id } });
-  }
-
-  async findOne(id: string): Promise<User> {
-    const user = await this.userModel.findByPk(id);
-    return new User({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      password: user.password,
+  async findByEmail(email: string): Promise<User | null> {
+    const userByEmail = await this.userModel.findOne({ where: { email } });
+    const user = User.create({
+      name: userByEmail.name,
+      email: userByEmail.email,
+      password: userByEmail.password,
     });
-  }
-  //   async findAll(): Promise<User[]> {
-  //     const usersResponse = await this.userModel.findAll();
-  //     const users: User[] = usersResponse.map((user) => {
-  //       new User({
-  //         id: user.id,
-  //         name: user.name,
-  //         email: user.email,
-  //         password: user.password,
-  //       });
-  //     });
-  //     return users;
-  //   }
 
-  async findByName(name: string): Promise<User> {
-    const user = await this.userModel.findOne({ where: { name } });
-    if (!user) return null;
-    const userByName: User = new User({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      password: user.password,
-    });
-    return userByName;
+    return user ? user : null;
   }
 }
