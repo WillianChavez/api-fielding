@@ -6,9 +6,12 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ListCollaboratorUseCase } from 'src/workspace/application/list-collaborator-use-case/list-collaborator-use-case';
-import { COLLABORATOR_ROUTE } from 'src/workspace/routes/workspace.route';
+import { COLLABORATOR_ROUTE } from 'src/workspace/routes/collaborator.route';
 import { ListCollaboratorHttpDto } from './list-collaborator-http.dto';
-import { PrimitiveUser } from 'src/workspace/domain/entities/user.entity';
+import {
+  CollaboratorResource,
+  CollaboratorResourceJson,
+} from './list-collaborator.resource';
 
 @Controller(COLLABORATOR_ROUTE)
 @ApiTags(COLLABORATOR_ROUTE)
@@ -18,11 +21,14 @@ export class ListCollaboratorController {
   ) {}
 
   @Get()
-  async listCollaborator(
+  async run(
     @Query() listCollaboratorHttpDto: ListCollaboratorHttpDto,
-  ): Promise<PrimitiveUser[]> {
+  ): Promise<CollaboratorResourceJson[]> {
     try {
-      return await this.listCollaboratorUseCase.run(listCollaboratorHttpDto);
+      const collaborators = await this.listCollaboratorUseCase.run(
+        listCollaboratorHttpDto,
+      );
+      return CollaboratorResource.collectionToJson(collaborators);
     } catch (error) {
       throw new InternalServerErrorException(error);
     }

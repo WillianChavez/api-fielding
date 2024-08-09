@@ -16,6 +16,11 @@ export class CollaboratorMapper extends BaseMapper<
     });
   }
   toPersistence(domain: Collaborator): CollaboratorModel {
-    throw new Error(`Method not implemented. ${domain}`);
+    const collaborator = domain.toValue();
+    return {
+      id: collaborator.id,
+      role_id: collaborator.role,
+      user_id: collaborator.user,
+    } as CollaboratorModel;
   }
 }
