@@ -12,9 +12,15 @@ import { CreateWorkspaceUseCase } from './application/create-workspace-use-case/
 import { WorkspaceMapper } from './infrastructure/mappers/workspace.mapper';
 import { RoleRepository } from './domain/repositories/role.repository';
 import { RelationalRoleRepository } from './infrastructure/respositories/relational.role.repository';
+import { CollaboratorMapper } from './infrastructure/mappers/collaborator.mapper';
+import { UserMapper } from './infrastructure/mappers/user.mapper';
+import { CollaboratorRepository } from './domain/repositories/collaborator.repository';
+import { RelationalCollaboratorRepository } from './infrastructure/respositories/relational.collaborator.repository';
+import { ListCollaboratorController } from './infrastructure/api/list-collaborator/list-collaborator.controller';
+import { ListCollaboratorUseCase } from './application/list-collaborator-use-case/list-collaborator-use-case';
 
 @Module({
-  controllers: [CreateWorkspaceController],
+  controllers: [CreateWorkspaceController, ListCollaboratorController],
   imports: [
     SequelizeModule.forFeature([
       WorkspaceModel,
@@ -26,9 +32,13 @@ import { RelationalRoleRepository } from './infrastructure/respositories/relatio
   ],
   providers: [
     CreateWorkspaceUseCase,
+    ListCollaboratorUseCase,
     RelationalWorkspaceRepository,
     RelationalRoleRepository,
+    RelationalCollaboratorRepository,
     WorkspaceMapper,
+    CollaboratorMapper,
+    UserMapper,
     {
       provide: WorkspaceRepository,
       useExisting: RelationalWorkspaceRepository,
@@ -37,7 +47,11 @@ import { RelationalRoleRepository } from './infrastructure/respositories/relatio
       provide: RoleRepository,
       useExisting: RelationalRoleRepository,
     },
+    {
+      provide: CollaboratorRepository,
+      useExisting: RelationalCollaboratorRepository,
+    },
   ],
-  exports: [CreateWorkspaceUseCase],
+  exports: [CreateWorkspaceUseCase, ListCollaboratorUseCase],
 })
 export class WorkspaceModule {}
