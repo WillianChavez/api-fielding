@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { NestApplication, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { swaggerInit } from './config/swagger';
