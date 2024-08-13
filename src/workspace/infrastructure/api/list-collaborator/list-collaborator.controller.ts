@@ -6,15 +6,15 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ListCollaboratorUseCase } from 'src/workspace/application/list-collaborator-use-case/list-collaborator-use-case';
-import { COLLABORATOR_ROUTE } from 'src/workspace/routes/collaborator.route';
 import { ListCollaboratorHttpDto } from './list-collaborator-http.dto';
 import {
   CollaboratorResource,
   CollaboratorResourceJson,
 } from './list-collaborator.resource';
+import { COLLABORATOR_ROUTE, WORKSPACE_ROUTE } from 'src/workspace/routes';
 
 @Controller(COLLABORATOR_ROUTE)
-@ApiTags(COLLABORATOR_ROUTE)
+@ApiTags(WORKSPACE_ROUTE)
 export class ListCollaboratorController {
   constructor(
     private readonly listCollaboratorUseCase: ListCollaboratorUseCase,
