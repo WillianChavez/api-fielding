@@ -24,7 +24,9 @@ export class Collaborator {
 
   toValue(): PrimitiveCollaborator {
     return {
-      ...this.attributes,
+      id: this.attributes.id,
+      role: this.attributes.role,
+      user: this.attributes.user,
     };
   }
 }

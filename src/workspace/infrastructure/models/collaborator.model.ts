@@ -48,6 +48,9 @@ export default class CollaboratorModel extends Model {
   })
   role_id: string;
 
+  @BelongsTo(() => RoleModel)
+  role: RoleModel;
+
   @DeletedAt
   deleted_at: Date;
 }
