@@ -2,6 +2,7 @@ import { RoleRepository } from 'src/workspace/domain/repositories/role.repositor
 import RoleModel from '../models/role.model';
 import { InjectModel } from '@nestjs/sequelize';
 import { Injectable } from 'src/shared/dependencies/injectable';
+import { Role } from 'src/workspace/domain/entities/role.entity';
 
 @Injectable()
 export class RelationalRoleRepository extends RoleRepository {
@@ -23,5 +24,15 @@ export class RelationalRoleRepository extends RoleRepository {
     });
 
     return roles.length > 0;
+  }
+
+  async findAll(): Promise<Role[]> {
+    const response = await this.roleModel.findAll();
+
+    const roles = response.map((role) => {
+      return Role.create({ name: role.name, id: role.id });
+    });
+
+    return roles;
   }
 }
