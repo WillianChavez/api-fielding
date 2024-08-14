@@ -9,7 +9,6 @@ import { USER_ROUTE } from '../../routes/user.route';
 import { CreateUserHttpDto } from './create-user-http.dto';
 import { CreateUserUseCase } from 'src/auth/application/create-user-use-case/create-user-use-case';
 import { EmailAlreadyExistException } from 'src/auth/domain/exceptions/email-already-exist.exception';
-import { PasswordNotLength } from 'src/auth/domain/exceptions/password-not-length.exception';
 import { UserAlreadyExistException } from 'src/auth/domain/exceptions/user-already-exist.exception';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateUserResource } from './create-user.resource';
@@ -30,7 +29,6 @@ export class CreateUserController {
     } catch (error) {
       if (
         error instanceof EmailAlreadyExistException ||
-        error instanceof PasswordNotLength ||
         error instanceof UserAlreadyExistException
       )
         throw new BadRequestException(error.message);
