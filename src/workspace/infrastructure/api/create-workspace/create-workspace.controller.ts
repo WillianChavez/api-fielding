@@ -8,10 +8,10 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateWorkspaceUseCase } from 'src/workspace/application/create-workspace-use-case/create-workspace-use-case';
-import { WORKSPACE_ROUTE } from 'src/workspace/routes/workspace.route';
 import { CreateWorkspaceHttpDto } from './create-workspace-http.dto';
 import { RoleNoExistException } from 'src/workspace/domain/exceptions/role-no.exist.exception';
 import { RoleNoHaveException } from 'src/workspace/domain/exceptions/role-no.have.exception';
+import { WORKSPACE_ROUTE } from 'src/workspace/routes';
 
 @Controller(WORKSPACE_ROUTE)
 @ApiTags(WORKSPACE_ROUTE)

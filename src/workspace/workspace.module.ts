@@ -18,9 +18,17 @@ import { CollaboratorRepository } from './domain/repositories/collaborator.repos
 import { RelationalCollaboratorRepository } from './infrastructure/respositories/relational.collaborator.repository';
 import { ListCollaboratorController } from './infrastructure/api/list-collaborator/list-collaborator.controller';
 import { ListCollaboratorUseCase } from './application/list-collaborator-use-case/list-collaborator-use-case';
+import { SeederModule } from 'nestjs-sequelize-seeder';
+import { SeedRol } from './infrastructure/seeders/rol.seed';
+import { ListRolCollaboratorController } from './infrastructure/api/list-rol-collaborator/list-rol-collaborator.controller';
+import { ListRolCollaboratorUseCase } from './application/list-rol-collaborator-use-case/list-rol-collaborator-use-case';
 
 @Module({
-  controllers: [CreateWorkspaceController, ListCollaboratorController],
+  controllers: [
+    CreateWorkspaceController,
+    ListCollaboratorController,
+    ListRolCollaboratorController,
+  ],
   imports: [
     SequelizeModule.forFeature([
       WorkspaceModel,
@@ -29,10 +37,12 @@ import { ListCollaboratorUseCase } from './application/list-collaborator-use-cas
       PermissionModel,
       CollaboratorModel,
     ]),
+    SeederModule.forFeature([SeedRol]),
   ],
   providers: [
     CreateWorkspaceUseCase,
     ListCollaboratorUseCase,
+    ListRolCollaboratorUseCase,
     RelationalWorkspaceRepository,
     RelationalRoleRepository,
     RelationalCollaboratorRepository,

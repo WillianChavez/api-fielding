@@ -8,10 +8,10 @@ export interface PrimitiveRole {
 export class Role {
   constructor(private attributes: PrimitiveRole) {}
 
-  static create(data: { name: string }): Role {
+  static create({ name, id = uuidv4() }: { name: string; id: uuidv4 }): Role {
     return new Role({
-      id: uuidv4(),
-      name: data.name,
+      id,
+      name,
     });
   }
 
