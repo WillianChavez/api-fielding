@@ -5,6 +5,7 @@ import { PrimitiveUser, User } from 'src/auth/domain/entities/user.entity';
 import { EmailAlreadyExistException } from 'src/auth/domain/exceptions/email-already-exist.exception';
 import { AuthService } from '../../domain/services/auth.service';
 import { Injectable } from '../../../shared/dependencies/injectable';
+import { Transactional } from './../../../shared/dependencies/transactional';
 
 @Injectable()
 export class CreateUserUseCase {
@@ -13,6 +14,7 @@ export class CreateUserUseCase {
     private readonly authService: AuthService,
   ) {}
 
+  @Transactional()
   async run(createUserDto: CreateUserDto): Promise<{ user: PrimitiveUser }> {
     const { name, email, password } = createUserDto;
 
