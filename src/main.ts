@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { NestApplication, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { swaggerInit } from './config/swagger';
@@ -9,7 +10,6 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe());
   const configService = app.get(ConfigService);
-
   swaggerInit(app);
 
   const port = configService.get<number>('port', 3000);
