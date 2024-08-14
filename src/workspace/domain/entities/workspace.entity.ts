@@ -24,11 +24,6 @@ export class Workspace {
     });
   }
 
-  addCollaborator(collaborator: Collaborator): void {
-    this.attributes.collaborators.push(collaborator);
-    this.attributes.count_collaborators = this.attributes.collaborators.length;
-  }
-
   toValue(): PrimitiveWorkspace {
     return {
       id: this.attributes.id,

@@ -4,19 +4,18 @@ import {
   CreatedAt,
   DataType,
   DefaultScope,
+  HasMany,
   Model,
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+import CollaboratorModel from 'src/workspace/infrastructure/models/collaborator.model';
 
 @DefaultScope(() => ({
   attributes: { exclude: ['password'] },
 }))
-@Table({ tableName: 'mnt_user', underscored: true})
-
+@Table({ tableName: 'mnt_user', underscored: true })
 export default class UserModel extends Model<UserModel> {
-
-
   @PrimaryKey
   @Column({ type: DataType.UUID, defaultValue: DataType.UUIDV4 })
   id: string;
@@ -26,7 +25,6 @@ export default class UserModel extends Model<UserModel> {
 
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   email: string;
-
 
   @Column({ type: DataType.STRING })
   password: string;
@@ -40,4 +38,7 @@ export default class UserModel extends Model<UserModel> {
 
   @Column({ type: DataType.STRING, allowNull: true })
   urlPhoto: string;
+
+  @HasMany(() => CollaboratorModel)
+  collaborator: CollaboratorModel;
 }

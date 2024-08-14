@@ -7,6 +7,7 @@ import { UserMapper } from '../mappers/user.mapper';
 import { Injectable } from 'src/shared/dependencies/injectable';
 import { Op } from 'sequelize';
 import WorkspaceModel from '../models/workspace.model';
+import UserModel from 'src/auth/infrastructure/models/user.model';
 
 @Injectable()
 export class RelationalCollaboratorRepository extends CollaboratorRepository {
@@ -14,6 +15,8 @@ export class RelationalCollaboratorRepository extends CollaboratorRepository {
     private readonly userMapper: UserMapper,
     @InjectModel(CollaboratorModel)
     private readonly collaboratorModel: typeof CollaboratorModel,
+    @InjectModel(UserModel)
+    private readonly userModel: typeof UserModel,
   ) {
     super();
   }
@@ -22,6 +25,7 @@ export class RelationalCollaboratorRepository extends CollaboratorRepository {
 
     if (name) filter = { name: { [Op.iLike]: `%${name}%` } };
 
+    console.log('filter', filter);
     const usersCollaborators = await this.collaboratorModel.findAll({
       include: [
         {
@@ -34,16 +38,29 @@ export class RelationalCollaboratorRepository extends CollaboratorRepository {
             },
           ],
         },
+        {
+          model: UserModel,
+          where: filter,
+        },
         RoleModel,
       ],
       where: {
         user_id: { [Op.ne]: user },
-        ...filter,
       },
     });
 
     return usersCollaborators.map((collaborator) =>
       this.userMapper.toDomain(collaborator),
     );
+  }
+
+  async findExistUserByIds(ids: string[]): Promise<string[]> {
+    const users = await this.userModel.findAll({
+      where: {
+        id: ids,
+      },
+      attributes: ['id'],
+    });
+    return ids.filter((id) => !users.find((user) => user.id === id));
   }
 }

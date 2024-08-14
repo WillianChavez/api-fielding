@@ -8,8 +8,8 @@ export class UserMapper {
   toDomain(collaboratorModel: CollaboratorModel): User {
     return new User({
       id: collaboratorModel.id,
-      name: 'Test',
-      email: 'email test',
+      name: collaboratorModel.user.name,
+      email: collaboratorModel.user.email,
       role: new Role({
         id: collaboratorModel.role.id,
         name: collaboratorModel.role.name,
