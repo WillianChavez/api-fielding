@@ -1,5 +1,5 @@
 export class PasswordAlreadyExistException extends Error {
   constructor() {
-    super('Password already exist');
+    super('Password is too short');
   }
 }

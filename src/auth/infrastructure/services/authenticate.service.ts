@@ -7,4 +7,7 @@ export class AuthenticateService extends AuthService {
   encryptPassword(password: string): string {
     return bcrypt.hashSync(password, 10);
   }
+  comparePasswords(password: string, hashedPassword: string): boolean {
+    return bcrypt.compareSync(password, hashedPassword);
+  }
 }

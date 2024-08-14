@@ -10,6 +10,7 @@ import {
 
 @Table({ tableName: 'mnt_user', underscored: true })
 export default class UserModel extends Model<UserModel> {
+  
   @PrimaryKey
   @Column({ type: DataType.UUID, defaultValue: DataType.UUIDV4 })
   id: string;

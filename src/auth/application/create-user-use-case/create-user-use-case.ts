@@ -27,7 +27,7 @@ export class CreateUserUseCase {
       throw new PasswordAlreadyExistException();
     }
 
-    const encryptedPassword = await this.authService.encryptPassword(password);
+    const encryptedPassword = this.authService.encryptPassword(password);
 
     const newUser = User.create({
       name,

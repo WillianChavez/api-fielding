@@ -5,15 +5,24 @@ export interface PrimitiveUser {
     id: string;
     name: string;
     email: string;
-    password:string;
     createdAt?: Date;
     deletedAt?: Date;
     urlPhoto?: string;
 }
 
+export interface UserAttributes {
+    id: string;
+    name: string;
+    email: string;
+    password: string;
+    createdAt?: Date;
+    deletedAt?: Date | null;
+    urlPhoto?: string | null;
+}
+
 
 export class User {
-    constructor(private attributes: PrimitiveUser) {}
+    constructor(private attributes: UserAttributes) {}
 
     static create(data: { name: string; email: string; password: string; urlPhoto?: string }): User {
         return new User({
@@ -32,7 +41,6 @@ export class User {
             id: this.attributes.id,
             name: this.attributes.name,
             email: this.attributes.email,
-            password: this.attributes.password,
             createdAt: this.attributes.createdAt,
             deletedAt: this.attributes.deletedAt,
             urlPhoto: this.attributes.urlPhoto
