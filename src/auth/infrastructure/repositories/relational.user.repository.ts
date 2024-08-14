@@ -17,12 +17,13 @@ export class RelationalUserRepository extends UserRepository {
 
   async findByEmail(email: string): Promise<User | null> {
     const userByEmail = await this.userModel.findOne({ where: { email } });
-    const user = User.create({
+
+    if (!userByEmail) return null;
+
+    return User.create({
       name: userByEmail.name,
       email: userByEmail.email,
       password: userByEmail.password,
     });
-
-    return user ? user : null;
   }
 }

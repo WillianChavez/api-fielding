@@ -14,7 +14,7 @@ export interface PrimitiveUser {
 
 export class User {
     constructor(private attributes: PrimitiveUser) {}
-
+    
     static create(data: { name: string; email: string; password: string; urlPhoto?: string }): User {
         return new User({
             id: uuidv4(),
