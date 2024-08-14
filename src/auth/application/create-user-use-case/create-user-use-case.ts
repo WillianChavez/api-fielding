@@ -1,4 +1,4 @@
-import { PasswordAlreadyExistException } from 'src/auth/domain/exceptions/password-already-exist.exception';
+import { PasswordNotLength } from 'src/auth/domain/exceptions/password-not-length.exception';
 import { UserRepository } from '../../domain/repositories/user.repository';
 import { CreateUserDto } from './create-user.dto';
 import { PrimitiveUser, User } from 'src/auth/domain/entities/user.entity';
@@ -23,7 +23,7 @@ export class CreateUserUseCase {
     }
 
     if (password.length < 6) {
-      throw new PasswordAlreadyExistException();
+      throw new PasswordNotLength();
     }
 
     const encryptedPassword = await this.authService.encryptPassword(password);
