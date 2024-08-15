@@ -1,10 +1,11 @@
 import { Injectable } from 'src/shared/dependencies';
+import { PrimitiveRole } from 'src/workspace/domain/entities/role.entity';
 import { PrimitiveUser } from 'src/workspace/domain/entities/user.entity';
 
 export interface CollaboratorResourceJson {
   id: string;
   email: string;
-  role: string;
+  role: PrimitiveRole;
   user: string;
 }
 
@@ -15,7 +16,7 @@ export class CollaboratorResource {
       id: user.id,
       email: user.email,
       user: user.name,
-      role: user.role.toValue().name,
+      role: user.role.toValue(),
     };
   }
 
