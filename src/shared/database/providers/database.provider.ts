@@ -14,7 +14,7 @@ export class SequelizeOptions implements SequelizeOptionsFactory {
       ...this.envConfigService.vars.db,
       autoLoadModels: this.envConfigService.vars.autoloadModels,
       synchronize: true,
-      models: [__dirname + './../../../../**/*.model.{ts,js}'],
+      models: [__dirname + '@/**/*.model.{ts,js}'],
     };
   }
 }
