@@ -3,7 +3,7 @@ import { PrimitiveRole } from '../../domain/entities/role.entity';
 import { RoleRepository } from '../../domain/repositories/role.repository';
 
 @Injectable()
-export class ListRolCollaboratorUseCase {
+export class ListRoleCollaboratorUseCase {
   constructor(private roleRepository: RoleRepository) {}
 
   async run(): Promise<PrimitiveRole[]> {

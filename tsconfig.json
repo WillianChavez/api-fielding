@@ -10,6 +10,11 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
+    "paths": {
+      "@shared-dependencies": [
+        "./src/shared/dependencies"
+      ],
+    },
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
