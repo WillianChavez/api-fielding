@@ -25,7 +25,6 @@ export class RelationalCollaboratorRepository extends CollaboratorRepository {
 
     if (name) filter = { name: { [Op.iLike]: `%${name}%` } };
 
-    console.log('filter', filter);
     const usersCollaborators = await this.collaboratorModel.findAll({
       include: [
         {
