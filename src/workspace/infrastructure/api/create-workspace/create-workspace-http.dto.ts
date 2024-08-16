@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
+  ArrayUnique,
   IsArray,
   IsNotEmpty,
   IsString,
@@ -39,5 +40,7 @@ export class CreateWorkspaceHttpDto {
     each: true,
   })
   @Type(() => CollaboratorItem)
+  @ArrayUnique((item) => item.id)
+  @ArrayUnique((item) => item.role)
   collaborators!: CollaboratorItem[];
 }

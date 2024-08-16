@@ -1,16 +1,19 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
 
-export class ListCollaboratorHttpDto {
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  user: string;
-
+export class ListCollaboratorQueryHttpDto {
   @ApiProperty({
     required: false,
   })
   @IsString()
   @IsOptional()
   name?: string;
+}
+
+export class ListCollaboratorParamHttpDto {
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  user: string;
 }

@@ -12,6 +12,7 @@ export class ListCollaboratorUseCase {
   ): Promise<PrimitiveUser[]> {
     const collaborators = await this.collaboratorRepository.findAllByUser(
       listCollaboratorDto.user,
+      listCollaboratorDto.name,
     );
 
     return collaborators.map((collaborator) => collaborator.toValue());
