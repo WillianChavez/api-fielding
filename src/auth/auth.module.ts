@@ -9,6 +9,8 @@ import { CreateUserUseCase } from './application/create-user-use-case/create-use
 import { AuthService } from './domain/services/auth.service';
 import { AuthenticateService } from './infrastructure/services/authenticate.service';
 import { CreateUserResource } from './infrastructure/api/create-user/create-user.resource';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   controllers: [CreateUserController],
@@ -26,6 +28,19 @@ import { CreateUserResource } from './infrastructure/api/create-user/create-user
       useExisting: AuthenticateService,
     },
   ],
-  imports: [SequelizeModule.forFeature([UserModel])],
+  imports: [
+    SequelizeModule.forFeature([UserModel]),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    JwtModule.registerAsync({
+      imports: [],
+      inject: [],
+      useFactory: () => {
+        return {
+          secret: process.env.JWT_SECRET,
+          signOptions: { expiresIn: '2h' },
+        };
+      }
+    })
+  ],
 })
 export class AuthModule {}

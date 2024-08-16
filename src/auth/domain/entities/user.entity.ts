@@ -36,6 +36,10 @@ export class User {
         });
     }
 
+    getPassword(): string {
+        return this.attributes.password;
+    }
+
     toValue(): PrimitiveUser {
         return {
             id: this.attributes.id,

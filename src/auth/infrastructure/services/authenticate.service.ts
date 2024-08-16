@@ -4,10 +4,13 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthenticateService extends AuthService {
-  encryptPassword(password: string): string {
-    return bcrypt.hashSync(password, 10);
+  async encryptPassword(password: string): Promise<string> {
+    return bcrypt.hash(password, 10);
   }
-  comparePasswords(password: string, hashedPassword: string): boolean {
-    return bcrypt.compareSync(password, hashedPassword);
+  async comparePasswords(
+    password: string,
+    hashedPassword: string,
+  ): Promise<boolean> {
+    return bcrypt.compare(password, hashedPassword);
   }
 }
