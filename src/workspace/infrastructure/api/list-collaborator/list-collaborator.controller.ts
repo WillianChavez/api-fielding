@@ -2,15 +2,16 @@ import {
   Controller,
   Get,
   InternalServerErrorException,
+  Param,
   Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ListCollaboratorUseCase } from 'src/workspace/application/list-collaborator-use-case/list-collaborator-use-case';
-import { ListCollaboratorHttpDto } from './list-collaborator-http.dto';
 import {
-  CollaboratorResource,
-  CollaboratorResourceJson,
-} from './list-collaborator.resource';
+  ListCollaboratorParamHttpDto,
+  ListCollaboratorQueryHttpDto,
+} from './list-collaborator-http.dto';
+
 import { COLLABORATOR_ROUTE, WORKSPACE_ROUTE } from 'src/workspace/routes';
 
 @Controller(COLLABORATOR_ROUTE)
@@ -20,15 +21,17 @@ export class ListCollaboratorController {
     private readonly listCollaboratorUseCase: ListCollaboratorUseCase,
   ) {}
 
-  @Get()
+  @Get(':user')
   async run(
-    @Query() listCollaboratorHttpDto: ListCollaboratorHttpDto,
-  ): Promise<CollaboratorResourceJson[]> {
+    @Param() listCollaboratorParamHttpDto: ListCollaboratorParamHttpDto,
+    @Query() listCollaboratorHttpDto: ListCollaboratorQueryHttpDto,
+  ) {
     try {
-      const collaborators = await this.listCollaboratorUseCase.run(
-        listCollaboratorHttpDto,
-      );
-      return CollaboratorResource.collectionToJson(collaborators);
+      const collaborators = await this.listCollaboratorUseCase.run({
+        ...listCollaboratorParamHttpDto,
+        ...listCollaboratorHttpDto,
+      });
+      return collaborators.map((collaborator) => collaborator);
     } catch (error) {
       throw new InternalServerErrorException(error);
     }

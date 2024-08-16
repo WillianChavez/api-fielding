@@ -17,6 +17,9 @@
       "@shared-decorators": [
         "./src/shared/decorators"
       ],
+      "@/*": [
+        "./src/*"
+      ]
     },
     "incremental": true,
     "skipLibCheck": true,
