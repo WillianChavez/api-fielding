@@ -8,18 +8,21 @@ import {
 } from 'sequelize-typescript';
 
 @Table({
-  tableName: 'ctl_resource_type',
+  tableName: 'mnt_http_request',
   underscored: true,
   paranoid: true,
   timestamps: true,
 })
-export class ResourceType extends Model {
+export class HttpRequestModel extends Model<HttpRequestModel> {
   @PrimaryKey
   @UUID
   id: string;
 
   @Column
-  name: string;
+  methodId: string;
+
+  @Column
+  url: string;
 
   @DeletedAt
   deletedAt?: Date;
