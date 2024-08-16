@@ -1,6 +1,6 @@
 import { Injectable } from 'src/shared/dependencies/injectable';
 import { AuthService } from '../../domain/services/auth.service';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthenticateService extends AuthService {

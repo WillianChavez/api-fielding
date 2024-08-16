@@ -3,14 +3,20 @@ import {
   Column,
   CreatedAt,
   DataType,
+  DefaultScope,
   Model,
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
 
-@Table({ tableName: 'mnt_user', underscored: true })
+@DefaultScope(() => ({
+  attributes: { exclude: ['password'] },
+}))
+@Table({ tableName: 'mnt_user', underscored: true})
+
 export default class UserModel extends Model<UserModel> {
-  
+
+
   @PrimaryKey
   @Column({ type: DataType.UUID, defaultValue: DataType.UUIDV4 })
   id: string;
@@ -20,6 +26,7 @@ export default class UserModel extends Model<UserModel> {
 
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   email: string;
+
 
   @Column({ type: DataType.STRING })
   password: string;
