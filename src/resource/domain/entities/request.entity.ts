@@ -1,30 +1,27 @@
+import { v4 as uuidv4 } from 'uuid';
 export interface PrimitiveRequest {
   id: string;
-  resource_id: string;
-  requestable_id: string;
-  requestable_type: string;
-  created_at?: Date;
-  updated_at?: Date;
-  deleted_at?: Date;
+  resourceId: string;
+  requestableId: string;
+  requestableType: string;
 }
+
+export interface createRequest extends Omit<PrimitiveRequest, 'id'> {}
 
 export class Request {
   constructor(private attributes: PrimitiveRequest) {}
 
-  static create(attributes: PrimitiveRequest): Request {
-    return new Request(attributes);
+  static create(attributes: createRequest): Request {
+    return new Request({
+      id: uuidv4(),
+      resourceId: attributes.resourceId,
+      requestableId: attributes.requestableId,
+      requestableType: attributes.requestableType,
+    });
   }
 
   toValue(): PrimitiveRequest {
     return this.attributes;
-  }
-
-  setUpdatedAt(updatedAt: Date): void {
-    this.attributes.updated_at = updatedAt;
-  }
-
-  setDeletedAt(deletedAt: Date): void {
-    this.attributes.deleted_at = deletedAt;
   }
 
   get id(): string {
