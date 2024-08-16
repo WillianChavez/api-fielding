@@ -28,8 +28,8 @@ import { CreateWorkspaceResource } from './infrastructure/api/create-workspace/c
 @Module({
   controllers: [
     CreateWorkspaceController,
-    ListCollaboratorController,
     ListRolCollaboratorController,
+    ListCollaboratorController,
   ],
   imports: [
     SequelizeModule.forFeature([
