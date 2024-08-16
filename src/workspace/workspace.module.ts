@@ -23,7 +23,6 @@ import { SeedRol } from './infrastructure/seeders/rol.seed';
 import { ListRolCollaboratorController } from './infrastructure/api/list-rol-collaborator/list-rol-collaborator.controller';
 import { ListRolCollaboratorUseCase } from './application/list-rol-collaborator-use-case/list-rol-collaborator-use-case';
 import UserModel from 'src/auth/infrastructure/models/user.model';
-import { CollaboratorResource } from './infrastructure/api/list-collaborator/list-collaborator.resource';
 import { CreateWorkspaceResource } from './infrastructure/api/create-workspace/create-workspace.resource';
 
 @Module({
@@ -45,7 +44,6 @@ import { CreateWorkspaceResource } from './infrastructure/api/create-workspace/c
   ],
   providers: [
     CollaboratorMapper,
-    CollaboratorResource,
     CreateWorkspaceResource,
     CreateWorkspaceUseCase,
     ListCollaboratorUseCase,
