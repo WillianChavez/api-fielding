@@ -10,6 +10,7 @@ import {
 } from 'sequelize-typescript';
 import WorkspaceModel from './workspace.model';
 import RoleModel from './role.model';
+import UserModel from 'src/auth/infrastructure/models/user.model';
 
 @Table({
   tableName: 'mnt_collaborator',
@@ -29,8 +30,12 @@ export default class CollaboratorModel extends Model {
     type: DataType.UUID,
     allowNull: false,
   })
-  //TODO: Add foreign key constraint user
+  @ForeignKey(() => UserModel)
   user_id: string;
+
+  @BelongsTo(() => UserModel)
+  user: UserModel;
+
   @ForeignKey(() => WorkspaceModel)
   @Column({
     type: DataType.UUID,

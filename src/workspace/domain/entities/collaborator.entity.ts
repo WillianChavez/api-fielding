@@ -7,9 +7,9 @@ export interface PrimitiveCollaborator {
 }
 
 export enum CollaboratorRole {
-  OWNER = 'owner',
-  ADMIN = 'admin',
-  MEMBER = 'member',
+  SPECTATOR = 'Espectador',
+  ADMIN = 'Admin',
+  DEV = 'Dev',
 }
 export class Collaborator {
   constructor(private attributes: PrimitiveCollaborator) {}
