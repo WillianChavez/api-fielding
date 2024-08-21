@@ -1,17 +1,21 @@
-import { InjectModel } from '@nestjs/sequelize';
-import { User } from 'src/workspace/domain/entities/user.entity';
 import { CollaboratorRepository } from 'src/workspace/domain/repositories/collaborator.repository';
-import CollaboratorModel from '../models/collaborator.model';
-import { UserMapper } from '../mappers/user.mapper';
 import { Injectable } from 'src/shared/dependencies/injectable';
+import { InjectModel } from '@nestjs/sequelize';
+import { Member } from '@/workspace/domain/entities/member.entity';
+import { MemberMapper } from '../mappers/member.mapper';
 import { Op } from 'sequelize';
-import WorkspaceModel from '../models/workspace.model';
+import { User } from 'src/workspace/domain/entities/user.entity';
+import { UserMapper } from '../mappers/user.mapper';
+import CollaboratorModel from '../models/collaborator.model';
+import RoleModel from '../models/role.model';
 import UserModel from '@/user/infrastructure/models/user.model';
+import WorkspaceModel from '../models/workspace.model';
 
 @Injectable()
 export class RelationalCollaboratorRepository extends CollaboratorRepository {
   constructor(
     private readonly userMapper: UserMapper,
+    private readonly memberMapper: MemberMapper,
     @InjectModel(CollaboratorModel)
     private readonly collaboratorModel: typeof CollaboratorModel,
     @InjectModel(UserModel)
@@ -66,5 +70,57 @@ export class RelationalCollaboratorRepository extends CollaboratorRepository {
       attributes: ['id'],
     });
     return ids.filter((id) => !users.find((user) => user.id === id));
+  }
+
+  async updateRole(options: {
+    user: string;
+    role: string;
+    workspace: string;
+  }): Promise<Member | null> {
+    const { user, role, workspace } = options;
+
+    const member = await this.collaboratorModel.findOne({
+      include: [UserModel, RoleModel],
+      where: {
+        user_id: user,
+        workspace_id: workspace,
+      },
+    });
+
+    if (!member) return null;
+
+    await member.update({ role_id: role });
+
+    await member.reload();
+
+    return this.memberMapper.toDomain(member);
+  }
+
+  async findUserById(id: string): Promise<User> {
+    const user = await this.userModel.findByPk(id);
+
+    if (!user) return null;
+
+    return this.userMapper.toDomain(user);
+  }
+
+  async deleteMember(options: {
+    workspace: string;
+    user: string;
+  }): Promise<boolean> {
+    const { workspace, user } = options;
+
+    const member = await this.collaboratorModel.findOne({
+      where: {
+        user_id: user,
+        workspace_id: workspace,
+      },
+    });
+
+    if (!member) return false;
+
+    await member.destroy();
+
+    return true;
   }
 }
