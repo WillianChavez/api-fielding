@@ -5,13 +5,14 @@ export interface PrimitiveUser {
   id: string;
   name: string;
   email: string;
+  password: string;
   createdAt?: Date;
   deletedAt?: Date;
   urlPhoto?: string;
 }
 
 export class User {
-  constructor(private attributes: PrimitiveUser & { password: string }) {}
+  constructor(private attributes: PrimitiveUser ) {}
 
   static create(data: {
     name: string;
@@ -30,15 +31,13 @@ export class User {
     });
   }
 
-//   getPassword(): string {
-//     return this.attributes.password;
-//   }
 
   toValue(): PrimitiveUser {
     return {
       id: this.attributes.id,
       name: this.attributes.name,
       email: this.attributes.email,
+      password: this.attributes.password,
       createdAt: this.attributes.createdAt,
       deletedAt: this.attributes.deletedAt,
       urlPhoto: this.attributes.urlPhoto,

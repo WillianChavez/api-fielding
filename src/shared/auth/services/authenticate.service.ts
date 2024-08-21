@@ -1,5 +1,5 @@
 import { Injectable } from 'src/shared/dependencies/injectable';
-import { AuthService } from '../../domain/services/auth.service';
+import { AuthService } from '../../../user/domain/services/auth.service';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()

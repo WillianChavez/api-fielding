@@ -1,4 +1,4 @@
-import { PrimitiveUser } from 'src/auth/domain/entities/user.entity';
+import { PrimitiveUser } from '@/user/domain/entities/user.entity';
 import { Injectable } from 'src/shared/dependencies';
 
 export interface UserHttpResourceJson {

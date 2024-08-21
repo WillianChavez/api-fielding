@@ -7,11 +7,8 @@ import { UserRepository } from './domain/repositories/user.repository';
 import { RelationalUserRepository } from './infrastructure/repositories/relational.user.repository';
 import { CreateUserUseCase } from './application/create-user-use-case/create-user-use-case';
 import { AuthService } from './domain/services/auth.service';
-import { AuthenticateService } from './infrastructure/services/authenticate.service';
+import { AuthenticateService } from '../shared/auth/services/authenticate.service';
 import { CreateUserResource } from './infrastructure/api/create-user/create-user.resource';
-import { PassportModule } from '@nestjs/passport';
-import { JwtModule } from '@nestjs/jwt';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   controllers: [CreateUserController],
@@ -26,23 +23,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     },
     {
       provide: AuthService,
-      useExisting: AuthenticateService,
+      useClass: AuthenticateService,
     },
   ],
   imports: [
-    ConfigModule,
     SequelizeModule.forFeature([UserModel]),
-    PassportModule.register({ defaultStrategy: 'jwt' }),
-    JwtModule.registerAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => {
-        return {
-          secret: configService.get('JWT_SECRET'),
-          signOptions: { expiresIn: '4h' },
-        };
-      },
-    }),
   ],
 })
-export class AuthModule {}
+export class UserModule {}

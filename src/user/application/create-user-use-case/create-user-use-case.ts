@@ -1,10 +1,10 @@
 import { UserRepository } from '../../domain/repositories/user.repository';
 import { CreateUserDto } from './create-user.dto';
-import { PrimitiveUser, User } from 'src/auth/domain/entities/user.entity';
-import { EmailAlreadyExistException } from 'src/auth/domain/exceptions/email-already-exist.exception';
+import { PrimitiveUser, User } from '@/user/domain/entities/user.entity';
+import { EmailAlreadyExistException } from '@/user/domain/exceptions/email-already-exist.exception';
 import { AuthService } from '../../domain/services/auth.service';
 import { Injectable } from '../../../shared/dependencies/injectable';
-import { Transactional } from './../../../shared/dependencies/transactional';
+import { Transactional } from '../../../shared/dependencies/transactional';
 
 @Injectable()
 export class CreateUserUseCase {

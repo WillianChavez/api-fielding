@@ -7,9 +7,9 @@ import {
 } from '@nestjs/common';
 import { USER_ROUTE } from '../../routes/user.route';
 import { CreateUserHttpDto } from './create-user-http.dto';
-import { CreateUserUseCase } from 'src/auth/application/create-user-use-case/create-user-use-case';
-import { EmailAlreadyExistException } from 'src/auth/domain/exceptions/email-already-exist.exception';
-import { UserAlreadyExistException } from 'src/auth/domain/exceptions/user-already-exist.exception';
+import { CreateUserUseCase } from '@/user/application/create-user-use-case/create-user-use-case';
+import { EmailAlreadyExistException } from '@/user/domain/exceptions/email-already-exist.exception';
+import { UserAlreadyExistException } from '@/user/domain/exceptions/user-already-exist.exception';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateUserResource } from './create-user.resource';
 

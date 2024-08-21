@@ -1,8 +1,8 @@
 import { InjectModel } from '@nestjs/sequelize';
-import { UserRepository } from 'src/auth/domain/repositories/user.repository';
+import { UserRepository } from '@/user/domain/repositories/user.repository';
 import { Injectable } from 'src/shared/dependencies/injectable';
 import UserModel from '../models/user.model';
-import { User } from 'src/auth/domain/entities/user.entity';
+import { User } from '@/user/domain/entities/user.entity';
 
 @Injectable()
 export class RelationalUserRepository extends UserRepository {

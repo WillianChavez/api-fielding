@@ -6,7 +6,7 @@ import { UserMapper } from '../mappers/user.mapper';
 import { Injectable } from 'src/shared/dependencies/injectable';
 import { Op } from 'sequelize';
 import WorkspaceModel from '../models/workspace.model';
-import UserModel from 'src/auth/infrastructure/models/user.model';
+import UserModel from '@/user/infrastructure/models/user.model';
 
 @Injectable()
 export class RelationalCollaboratorRepository extends CollaboratorRepository {

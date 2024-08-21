@@ -10,7 +10,7 @@ import {
 } from 'sequelize-typescript';
 import WorkspaceModel from './workspace.model';
 import RoleModel from './role.model';
-import UserModel from 'src/auth/infrastructure/models/user.model';
+import UserModel from '@/user/infrastructure/models/user.model';
 
 @Table({
   tableName: 'mnt_collaborator',

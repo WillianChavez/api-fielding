@@ -1,9 +1,9 @@
-import { UserRepository } from 'src/auth/domain/repositories/user.repository';
+import { UserRepository } from '@/user/domain/repositories/user.repository';
 import { Injectable, Transactional } from 'src/shared/dependencies';
 import { LoginUserDto } from './login-user.dto';
-import { UnAuthorizedException } from 'src/auth/domain/exceptions/un-authorized.exception';
-import { AuthService } from 'src/auth/domain/services/auth.service';
-import { IncorrectPasswordException } from 'src/auth/domain/exceptions/incorrect-password.exception';
+import { UnAuthorizedException } from '@/user/domain/exceptions/un-authorized.exception';
+import { AuthService } from '@/user/domain/services/auth.service';
+import { IncorrectPasswordException } from '@/user/domain/exceptions/incorrect-password.exception';
 
 @Injectable()
 export class LoginUserUseCase {
@@ -20,14 +20,15 @@ export class LoginUserUseCase {
     if (!user) {
       throw new UnAuthorizedException();
     }
+    const userValue = user.toValue();
 
     const isPasswordValid = await this.authService.comparePasswords(
       password,
-      user.getPassword(),
+      userValue.password,
     );
     if (!isPasswordValid) {
       throw new IncorrectPasswordException();
     }
-    return { user: user.toValue };
+    return { user: userValue };
   }
 }
