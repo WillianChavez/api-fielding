@@ -19,7 +19,7 @@ export class LoginController {
   @Post()
   async run(@Body() LoginUserHttpDto: LoginUserHttpDto) {
     try {
-      return this.loginUserUseCase.run(LoginUserHttpDto);
+      return await this.loginUserUseCase.run(LoginUserHttpDto);
     } catch (error) {
       if (error instanceof UnAuthorizedException) {
         throw new BadRequestException(error.message);

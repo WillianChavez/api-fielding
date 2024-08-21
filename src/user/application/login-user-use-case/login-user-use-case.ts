@@ -17,6 +17,7 @@ export class LoginUserUseCase {
     const { email, password } = loginUserDto;
 
     const user = await this.userRepository.findByEmail(email);
+
     if (!user) {
       throw new UnAuthorizedException();
     }
@@ -26,6 +27,7 @@ export class LoginUserUseCase {
       password,
       userValue.password,
     );
+
     if (!isPasswordValid) {
       throw new IncorrectPasswordException();
     }

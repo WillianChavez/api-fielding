@@ -9,13 +9,16 @@ import { CreateUserUseCase } from './application/create-user-use-case/create-use
 import { AuthService } from './domain/services/auth.service';
 import { AuthenticateService } from '../shared/auth/services/authenticate.service';
 import { CreateUserResource } from './infrastructure/api/create-user/create-user.resource';
+import { LoginController } from './infrastructure/api/login/login.controller';
+import { LoginUserUseCase } from './application/login-user-use-case/login-user-use-case';
 
 @Module({
-  controllers: [CreateUserController],
+  controllers: [CreateUserController, LoginController],
   providers: [
     RelationalUserRepository,
     CreateUserUseCase,
     CreateUserResource,
+    LoginUserUseCase,
     AuthenticateService,
     {
       provide: UserRepository,

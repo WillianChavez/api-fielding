@@ -16,7 +16,9 @@ export class RelationalUserRepository extends UserRepository {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const userByEmail = await this.userModel.findOne({ where: { email } });
+    const userByEmail = await this.userModel
+      .unscoped()
+      .findOne({ where: { email } });
 
     if (!userByEmail) return null;
 
