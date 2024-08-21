@@ -4,6 +4,7 @@ import { LoginUserDto } from './login-user.dto';
 import { UnAuthorizedException } from '@/user/domain/exceptions/un-authorized.exception';
 import { AuthService } from '@/user/domain/services/auth.service';
 import { IncorrectPasswordException } from '@/user/domain/exceptions/incorrect-password.exception';
+import { PrimitiveUser } from '@/user/domain/entities/user.entity';
 
 @Injectable()
 export class LoginUserUseCase {
@@ -13,7 +14,9 @@ export class LoginUserUseCase {
   ) {}
 
   @Transactional()
-  async run(loginUserDto: LoginUserDto): Promise<{ user: any }> {
+  async run(
+    loginUserDto: LoginUserDto,
+  ): Promise<{ user: PrimitiveUser; token: string }> {
     const { email, password } = loginUserDto;
 
     const user = await this.userRepository.findByEmail(email);
@@ -31,6 +34,11 @@ export class LoginUserUseCase {
     if (!isPasswordValid) {
       throw new IncorrectPasswordException();
     }
-    return { user: userValue };
+
+    const token = this.authService.generateToken({ id: userValue.id });
+    return {
+      user: userValue,
+      token,
+    };
   }
 }

@@ -4,4 +4,5 @@ export abstract class AuthService {
     password: string,
     hashedPassword: string,
   ): Promise<boolean>;
+  abstract generateToken(payload: { id: string }): string;
 }

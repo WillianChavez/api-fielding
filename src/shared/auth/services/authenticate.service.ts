@@ -18,7 +18,7 @@ export class AuthenticateService extends AuthService {
   ): Promise<boolean> {
     return bcrypt.compare(password, hashedPassword);
   }
-  async generateToken(payload: JwtPayload): Promise<string> {
+  generateToken(payload: JwtPayload): string {
     const token = this.jwtService.sign(payload);
     return token;
   }
