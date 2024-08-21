@@ -10,4 +10,8 @@ export abstract class CollaboratorRepository {
     role: string;
     workspace: string;
   }): Promise<Member | null>;
+  abstract deleteMember(options: {
+    workspace: string;
+    user: string;
+  }): Promise<boolean>;
 }
