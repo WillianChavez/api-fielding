@@ -3,6 +3,8 @@ import { CollaboratorRepository } from './domain/repositories/collaborator.repos
 import { CreateWorkspaceController } from './infrastructure/api/create-workspace/create-workspace.controller';
 import { CreateWorkspaceResource } from './infrastructure/api/create-workspace/create-workspace.resource';
 import { CreateWorkspaceUseCase } from './application/create-workspace-use-case/create-workspace-use-case';
+import { DeleteMemberController } from './infrastructure/api/delete-member/delete-member.controller';
+import { DeleteMemberUseCase } from './application/delete-member-use-case/delete-member-use-case';
 import { ListCollaboratorController } from './infrastructure/api/list-collaborator/list-collaborator.controller';
 import { ListCollaboratorUseCase } from './application/list-collaborator-use-case/list-collaborator-use-case';
 import { ListRolCollaboratorController } from './infrastructure/api/list-rol-collaborator/list-rol-collaborator.controller';
@@ -38,6 +40,7 @@ import WorkspaceModel from './infrastructure/models/workspace.model';
     ListCollaboratorController,
     ListWorkspaceController,
     UpdateRolMemberController,
+    DeleteMemberController,
   ],
   imports: [
     SequelizeModule.forFeature([
@@ -54,6 +57,7 @@ import WorkspaceModel from './infrastructure/models/workspace.model';
     CollaboratorMapper,
     CreateWorkspaceResource,
     CreateWorkspaceUseCase,
+    DeleteMemberUseCase,
     ListCollaboratorUseCase,
     ListRolCollaboratorUseCase,
     ListWorkspaceResource,
@@ -79,6 +83,10 @@ import WorkspaceModel from './infrastructure/models/workspace.model';
       useExisting: RelationalCollaboratorRepository,
     },
   ],
-  exports: [CreateWorkspaceUseCase, ListCollaboratorUseCase],
+  exports: [
+    CreateWorkspaceUseCase,
+    ListCollaboratorUseCase,
+    DeleteMemberUseCase,
+  ],
 })
 export class WorkspaceModule {}

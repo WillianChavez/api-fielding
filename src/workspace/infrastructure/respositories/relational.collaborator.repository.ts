@@ -103,4 +103,24 @@ export class RelationalCollaboratorRepository extends CollaboratorRepository {
 
     return this.userMapper.toDomain(user);
   }
+
+  async deleteMember(options: {
+    workspace: string;
+    user: string;
+  }): Promise<boolean> {
+    const { workspace, user } = options;
+
+    const member = await this.collaboratorModel.findOne({
+      where: {
+        user_id: user,
+        workspace_id: workspace,
+      },
+    });
+
+    if (!member) return false;
+
+    await member.destroy();
+
+    return true;
+  }
 }

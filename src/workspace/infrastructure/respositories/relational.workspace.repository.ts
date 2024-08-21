@@ -40,4 +40,14 @@ export class RelationalWorkspaceRepository extends WorkspaceRepository {
       this.workspaceMapper.toDomain(workspace),
     );
   }
+
+  async findById(id: string): Promise<Workspace | null> {
+    const workspace = await this.workspaceModel.findByPk(id, {
+      include: [CollaboratorModel],
+    });
+
+    if (!workspace) return null;
+
+    return this.workspaceMapper.toDomain(workspace);
+  }
 }
