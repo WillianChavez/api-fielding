@@ -1,4 +1,4 @@
-export abstract class AuthService {
+export abstract class UserService {
   abstract encryptPassword(password: string): Promise<string>;
   abstract comparePasswords(
     password: string,

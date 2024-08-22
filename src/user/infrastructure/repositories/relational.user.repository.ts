@@ -11,8 +11,15 @@ export class RelationalUserRepository extends UserRepository {
   }
 
   async create(user: User): Promise<User> {
-    await this.userModel.create(user.toValue());
-    return user;
+    const userCreated = await this.userModel.create(user.toValue());
+    const newUser = User.create({
+      id: userCreated.id,
+      email: userCreated.email,
+      name: userCreated.name,
+      password: userCreated.password,
+      urlPhoto: userCreated.urlPhoto,
+    });
+    return newUser;
   }
 
   async findByEmail(email: string): Promise<User | null> {
@@ -23,6 +30,7 @@ export class RelationalUserRepository extends UserRepository {
     if (!userByEmail) return null;
 
     return User.create({
+      id: userByEmail.id,
       name: userByEmail.name,
       email: userByEmail.email,
       password: userByEmail.password,

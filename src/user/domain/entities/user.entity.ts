@@ -15,13 +15,14 @@ export class User {
   constructor(private attributes: PrimitiveUser ) {}
 
   static create(data: {
+    id?: string;
     name: string;
     email: string;
     password: string;
     urlPhoto?: string;
   }): User {
     return new User({
-      id: uuidv4(),
+      id: data.id ?? uuidv4(),
       name: data.name,
       email: data.email,
       password: data.password,

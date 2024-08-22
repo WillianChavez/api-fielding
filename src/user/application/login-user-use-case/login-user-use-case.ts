@@ -2,7 +2,7 @@ import { UserRepository } from '@/user/domain/repositories/user.repository';
 import { Injectable, Transactional } from 'src/shared/dependencies';
 import { LoginUserDto } from './login-user.dto';
 import { UnAuthorizedException } from '@/user/domain/exceptions/un-authorized.exception';
-import { AuthService } from '@/user/domain/services/auth.service';
+import { UserService } from '@/user/domain/services/user.service';
 import { IncorrectPasswordException } from '@/user/domain/exceptions/incorrect-password.exception';
 import { PrimitiveUser } from '@/user/domain/entities/user.entity';
 
@@ -10,7 +10,7 @@ import { PrimitiveUser } from '@/user/domain/entities/user.entity';
 export class LoginUserUseCase {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly authService: AuthService,
+    private readonly userService: UserService,
   ) {}
 
   @Transactional()
@@ -26,7 +26,7 @@ export class LoginUserUseCase {
     }
     const userValue = user.toValue();
 
-    const isPasswordValid = await this.authService.comparePasswords(
+    const isPasswordValid = await this.userService.comparePasswords(
       password,
       userValue.password,
     );
@@ -35,7 +35,7 @@ export class LoginUserUseCase {
       throw new IncorrectPasswordException();
     }
 
-    const token = this.authService.generateToken({ id: userValue.id });
+    const token = this.userService.generateToken({ id: userValue.id });
     return {
       user: userValue,
       token,

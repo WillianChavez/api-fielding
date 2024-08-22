@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { SequelizeModule } from '@nestjs/sequelize';
-import UserModel from '@/user/infrastructure/models/user.model';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import UserModel from '@/user/infrastructure/models/user.model';
 
 @Module({
   providers: [JwtStrategy],

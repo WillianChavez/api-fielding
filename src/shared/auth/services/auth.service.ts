@@ -1,11 +1,11 @@
 import { Injectable } from 'src/shared/dependencies/injectable';
-import { AuthService } from '../../../user/domain/services/auth.service';
 import * as bcrypt from 'bcrypt';
 import { JwtPayload } from '../interface/jwt-payload.interface';
 import { JwtService } from '@nestjs/jwt';
+import { UserService } from '@/user/domain/services/user.service';
 
 @Injectable()
-export class AuthenticateService extends AuthService {
+export class AuthService extends UserService {
   constructor(private readonly jwtService: JwtService) {
     super();
   }

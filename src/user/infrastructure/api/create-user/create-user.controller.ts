@@ -24,8 +24,9 @@ export class CreateUserController {
   @Post()
   async run(@Body() createUserHttpDto: CreateUserHttpDto) {
     try {
-      const user = await this.createUserUseCase.run(createUserHttpDto);
-      return this.createUserResource.toJson(user);
+      const { user, token } =
+        await this.createUserUseCase.run(createUserHttpDto);
+      return this.createUserResource.toJson({ user, token });
     } catch (error) {
       if (
         error instanceof EmailAlreadyExistException ||
