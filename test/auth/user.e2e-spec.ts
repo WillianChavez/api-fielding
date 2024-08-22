@@ -1,5 +1,5 @@
 import { WorkspaceModule } from '../.././src/workspace/workspace.module';
-import { AuthModule } from '../.././src/auth/auth.module';
+import { AuthModule } from '../../src/user/user.module';
 import { SharedModule } from '../../src/shared/shared.module';
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';

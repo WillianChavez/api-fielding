@@ -8,7 +8,7 @@ import { User } from 'src/workspace/domain/entities/user.entity';
 import { UserMapper } from '../mappers/user.mapper';
 import CollaboratorModel from '../models/collaborator.model';
 import RoleModel from '../models/role.model';
-import UserModel from 'src/auth/infrastructure/models/user.model';
+import UserModel from '@/user/infrastructure/models/user.model';
 import WorkspaceModel from '../models/workspace.model';
 
 @Injectable()

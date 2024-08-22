@@ -31,7 +31,7 @@ import CollaboratorModel from './infrastructure/models/collaborator.model';
 import PermissionModel from './infrastructure/models/permission.model';
 import RoleModel from './infrastructure/models/role.model';
 import RolePermissionModel from './infrastructure/models/role.permission.model';
-import UserModel from 'src/auth/infrastructure/models/user.model';
+import UserModel from '@/user/infrastructure/models/user.model';
 import WorkspaceModel from './infrastructure/models/workspace.model';
 @Module({
   controllers: [

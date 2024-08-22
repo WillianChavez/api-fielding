@@ -1,6 +1,6 @@
 import { User } from 'src/workspace/domain/entities/user.entity';
 import { Injectable } from 'src/shared/dependencies/injectable';
-import UserModel from '@/auth/infrastructure/models/user.model';
+import UserModel from '@/user/infrastructure/models/user.model';
 import { BaseMapper } from '@/workspace/domain/mappers/base.mapper';
 
 @Injectable()
