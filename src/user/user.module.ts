@@ -20,13 +20,14 @@ import { AuthModule } from '@/shared/auth/auth.module';
     CreateUserUseCase,
     CreateUserResource,
     LoginUserUseCase,
+    AuthService,
     {
       provide: UserRepository,
       useExisting: RelationalUserRepository,
     },
     {
-      provide: AuthService,
-      useExisting: UserService,
+      provide: UserService,
+      useClass: AuthService,
     },
   ],
   imports: [SequelizeModule.forFeature([UserModel]), AuthModule],
