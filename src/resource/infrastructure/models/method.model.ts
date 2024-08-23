@@ -1,21 +1,24 @@
 import {
   Column,
+  CreatedAt,
   DeletedAt,
   HasMany,
   Model,
   PrimaryKey,
   Table,
+  UpdatedAt,
 } from 'sequelize-typescript';
 
 import { UUID } from '@shared-decorators';
-import ResourceModel from './resource.model';
+import HttpRequestModel from './http-request.model';
+
 @Table({
-  tableName: 'ctl_resource_type',
+  tableName: 'ctl_method',
   underscored: true,
   paranoid: true,
   timestamps: true,
 })
-export default class ResourceTypeModel extends Model<ResourceTypeModel> {
+export default class MethodModel extends Model<MethodModel> {
   @PrimaryKey
   @UUID
   id: string;
@@ -23,9 +26,15 @@ export default class ResourceTypeModel extends Model<ResourceTypeModel> {
   @Column
   name: string;
 
+  @CreatedAt
+  createdAt: Date;
+
+  @UpdatedAt
+  updatedAt?: Date;
+
   @DeletedAt
   deletedAt?: Date;
 
-  @HasMany(() => ResourceModel)
-  resources: ResourceModel[];
+  @HasMany(() => HttpRequestModel)
+  httpRequests: HttpRequestModel[];
 }

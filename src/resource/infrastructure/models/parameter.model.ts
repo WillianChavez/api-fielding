@@ -1,5 +1,6 @@
 import {
   BelongsTo,
+  Column,
   CreatedAt,
   DeletedAt,
   ForeignKey,
@@ -11,32 +12,26 @@ import {
 
 import { UUID } from '@shared-decorators';
 import HttpRequestModel from './http-request.model';
-import ResourceModel from './resource.model';
 
 @Table({
-  tableName: 'mnt_request',
+  tableName: 'mnt_parameter',
   underscored: true,
   timestamps: true,
   paranoid: true,
 })
-export default class RequestModel extends Model<RequestModel> {
+export default class ParameterModel extends Model<ParameterModel> {
   @PrimaryKey
   @UUID
   id: string;
 
-  @UUID
-  @ForeignKey(() => ResourceModel)
-  resourceId: string;
+  @Column
+  name: string;
 
-  @BelongsTo(() => ResourceModel)
-  resource: ResourceModel;
+  @Column
+  value: string;
 
-  @UUID
-  @ForeignKey(() => HttpRequestModel)
-  httpRequestId: string;
-
-  @BelongsTo(() => HttpRequestModel)
-  httpRequest: HttpRequestModel;
+  @Column
+  isQueryParameter: boolean;
 
   @CreatedAt
   createdAt: Date;
@@ -46,4 +41,11 @@ export default class RequestModel extends Model<RequestModel> {
 
   @DeletedAt
   deletedAt?: Date;
+
+  @UUID
+  @ForeignKey(() => HttpRequestModel)
+  httpRequestId: string;
+
+  @BelongsTo(() => HttpRequestModel)
+  httpRequest: HttpRequestModel;
 }

@@ -1,24 +1,28 @@
-import { UUID } from '@shared-decorators';
 import {
   AllowNull,
+  BelongsTo,
   Column,
   CreatedAt,
   DataType,
   Default,
   DeletedAt,
+  ForeignKey,
+  HasMany,
   Model,
   PrimaryKey,
   Table,
   UpdatedAt,
 } from 'sequelize-typescript';
 
+import { UUID } from '@shared-decorators';
+import ResourceTypeModel from './resource-type.model';
 @Table({
   tableName: 'mnt_resource',
   underscored: true,
   paranoid: true,
   timestamps: true,
 })
-export class ResourceModel extends Model<ResourceModel> {
+export default class ResourceModel extends Model<ResourceModel> {
   @PrimaryKey
   @UUID
   id: string;
@@ -36,11 +40,29 @@ export class ResourceModel extends Model<ResourceModel> {
   description: string;
 
   @CreatedAt
-  createdAt?: Date;
+  createdAt: Date;
 
   @UpdatedAt
   updatedAt?: Date;
 
   @DeletedAt
   deletedAt?: Date;
+
+  @ForeignKey(() => ResourceTypeModel)
+  @UUID
+  resourceTypeId: string;
+
+  @BelongsTo(() => ResourceTypeModel)
+  resourceType: ResourceTypeModel;
+
+  @AllowNull
+  @ForeignKey(() => ResourceModel)
+  @UUID
+  parentResourceId: string;
+
+  @BelongsTo(() => ResourceModel)
+  parentResource: ResourceModel;
+
+  @HasMany(() => ResourceModel)
+  children: ResourceModel[];
 }
