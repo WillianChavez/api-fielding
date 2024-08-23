@@ -12,6 +12,7 @@ import { CreateUserResource } from './infrastructure/api/create-user/create-user
 import { LoginController } from './infrastructure/api/login/login.controller';
 import { LoginUserUseCase } from './application/login-user-use-case/login-user-use-case';
 import { AuthModule } from '@/shared/auth/auth.module';
+import { LoginUserResource } from './infrastructure/api/login/login-user.resource';
 
 @Module({
   controllers: [CreateUserController, LoginController],
@@ -21,6 +22,7 @@ import { AuthModule } from '@/shared/auth/auth.module';
     CreateUserResource,
     LoginUserUseCase,
     AuthService,
+    LoginUserResource,
     {
       provide: UserRepository,
       useExisting: RelationalUserRepository,
