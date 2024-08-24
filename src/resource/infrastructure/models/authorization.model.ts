@@ -38,9 +38,6 @@ export default class AuthorizationModel extends Model<AuthorizationModel> {
   @DeletedAt
   deletedAt?: Date;
 
-  @HasMany(() => ExtraOptionsModel)
-  extraOptions: ExtraOptionsModel[];
-
   @ForeignKey(() => HttpRequestModel)
   @UUID
   httpRequestId: string;
@@ -54,4 +51,7 @@ export default class AuthorizationModel extends Model<AuthorizationModel> {
 
   @BelongsTo(() => AuthorizationTypeModel)
   authorizationType: AuthorizationTypeModel;
+
+  @HasMany(() => ExtraOptionsModel)
+  extraOptions: ExtraOptionsModel[];
 }

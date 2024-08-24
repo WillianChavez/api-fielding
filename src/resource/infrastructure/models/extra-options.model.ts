@@ -18,7 +18,7 @@ import AuthorizationModel from './authorization.model';
   timestamps: true,
   paranoid: true,
 })
-export default class ExtraOptionsModel extends Model<ExtraOptionsModel> {
+export default class ExtraOptionsModel extends Model {
   @PrimaryKey
   @UUID
   id: string;
@@ -42,6 +42,6 @@ export default class ExtraOptionsModel extends Model<ExtraOptionsModel> {
   @UUID
   authorizationId: string;
 
-  @BelongsTo(() => AuthorizationModel, 'authorizationId')
+  @BelongsTo(() => AuthorizationModel)
   authorization: AuthorizationModel;
 }
