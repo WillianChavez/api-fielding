@@ -11,6 +11,10 @@ import RequestModel from './infrastructure/models/request.model';
 import MethodModel from './infrastructure/models/method.model';
 import ParameterModel from './infrastructure/models/parameter.model';
 import HttpRequestModel from './infrastructure/models/http-request.model';
+import { SeederModule } from 'nestjs-sequelize-seeder';
+import { SeedAuthorizationType } from './infrastructure/seeders/authorization-type.seed';
+import { SeedMethod } from './infrastructure/seeders/method.seed';
+import { SeedResourceType } from './infrastructure/seeders/resource-type.seed';
 
 @Module({
   imports: [
@@ -26,6 +30,11 @@ import HttpRequestModel from './infrastructure/models/http-request.model';
       HttpRequestModel,
       BodyModel,
       HeaderModel,
+    ]),
+    SeederModule.forFeature([
+      SeedAuthorizationType,
+      SeedMethod,
+      SeedResourceType,
     ]),
   ],
 })
