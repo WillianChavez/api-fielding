@@ -24,4 +24,30 @@ export class RelationalWorkspaceRepository extends WorkspaceRepository {
     );
     return workspace;
   }
+
+  async listByUser(options: { user: string }): Promise<Workspace[]> {
+    const { user } = options;
+    const workspaces = await this.workspaceModel.findAll({
+      include: [
+        {
+          model: CollaboratorModel,
+          where: { user_id: user },
+        },
+      ],
+    });
+
+    return workspaces.map((workspace) =>
+      this.workspaceMapper.toDomain(workspace),
+    );
+  }
+
+  async findById(id: string): Promise<Workspace | null> {
+    const workspace = await this.workspaceModel.findByPk(id, {
+      include: [CollaboratorModel],
+    });
+
+    if (!workspace) return null;
+
+    return this.workspaceMapper.toDomain(workspace);
+  }
 }
