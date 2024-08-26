@@ -1,13 +1,13 @@
 export interface PrimitiveResourceType {
-  id: number;
+  id: string;
   name: string;
 }
 
 export class ResourceType {
   constructor(private attributes: PrimitiveResourceType) {}
 
-  static create(attributes: PrimitiveResourceType): ResourceType {
-    return new ResourceType(attributes);
+  static create({ id, name }: PrimitiveResourceType): ResourceType {
+    return new ResourceType({ id, name });
   }
 
   toValue(): PrimitiveResourceType {

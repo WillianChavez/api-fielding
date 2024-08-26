@@ -1,22 +1,32 @@
 import { v4 as uuidv4 } from 'uuid';
-export interface PrimitiveRequest {
-  id: string;
+
+export type RequestableType = 'http-request';
+export interface createRequest {
   resourceId: string;
   requestableId: string;
-  requestableType: string;
+  requestableType: RequestableType;
+  id?: string;
 }
 
-export interface createRequest extends Omit<PrimitiveRequest, 'id'> {}
+// optional id
+export interface PrimitiveRequest extends createRequest {
+  id: string;
+}
 
 export class Request {
   constructor(private attributes: PrimitiveRequest) {}
 
-  static create(attributes: createRequest): Request {
+  static create({
+    id = uuidv4(),
+    resourceId,
+    requestableId,
+    requestableType,
+  }: createRequest): Request {
     return new Request({
-      id: uuidv4(),
-      resourceId: attributes.resourceId,
-      requestableId: attributes.requestableId,
-      requestableType: attributes.requestableType,
+      id,
+      resourceId,
+      requestableId,
+      requestableType,
     });
   }
 

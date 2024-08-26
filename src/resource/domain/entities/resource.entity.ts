@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 import { PrimitiveResourceType } from './resource-type.entity';
 
-export interface PrimitiveResource {
-  id: string;
+export interface CreateResource {
+  id?: string;
   resourceType: PrimitiveResourceType;
   order: number;
   name: string;
@@ -11,15 +11,29 @@ export interface PrimitiveResource {
   resources?: Resource[];
 }
 
-export interface CreateResource extends Omit<PrimitiveResource, 'id'> {}
-
+export interface PrimitiveResource extends CreateResource {
+  id: string;
+}
 export class Resource {
   constructor(private attributes: PrimitiveResource) {}
 
-  static create(createResource: CreateResource): Resource {
+  static create({
+    id = uuidv4(),
+    resourceType,
+    order,
+    name,
+    description,
+    parentResourceId,
+    resources,
+  }: CreateResource): Resource {
     return new Resource({
-      id: uuidv4(),
-      ...createResource,
+      id,
+      resourceType,
+      order,
+      name,
+      description,
+      parentResourceId,
+      resources,
     });
   }
 

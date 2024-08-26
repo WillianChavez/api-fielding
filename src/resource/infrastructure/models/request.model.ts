@@ -10,7 +10,6 @@ import {
 } from 'sequelize-typescript';
 
 import { UUID } from '@shared-decorators';
-import HttpRequestModel from './http-request.model';
 import ResourceModel from './resource.model';
 
 @Table({
@@ -32,11 +31,9 @@ export default class RequestModel extends Model<RequestModel> {
   resource: ResourceModel;
 
   @UUID
-  @ForeignKey(() => HttpRequestModel)
-  httpRequestId: string;
+  requestableId: string;
 
-  @BelongsTo(() => HttpRequestModel)
-  httpRequest: HttpRequestModel;
+  requestableType: string;
 
   @CreatedAt
   createdAt: Date;
