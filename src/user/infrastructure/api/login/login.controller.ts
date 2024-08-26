@@ -27,7 +27,6 @@ export class LoginController {
     try {
       const { token } = await this.loginUserUseCase.run(LoginUserHttpDto);
       return this.loginResource.toJson({ token });
-      // return await this.loginUserUseCase.run(LoginUserHttpDto);
     } catch (error) {
       if (error instanceof UnAuthorizedException) {
         throw new BadRequestException(error.message);
