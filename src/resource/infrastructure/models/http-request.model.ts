@@ -61,6 +61,12 @@ export default class HttpRequestModel extends Model<HttpRequestModel> {
   @HasMany(() => AuthorizationModel)
   authorizations: AuthorizationModel[];
 
-  @HasOne(() => RequestModel)
+  @HasOne(() => RequestModel, {
+    foreignKey: 'requestableId',
+    constraints: false,
+    scope: {
+      requestableType: 'http-request',
+    },
+  })
   request: RequestModel;
 }

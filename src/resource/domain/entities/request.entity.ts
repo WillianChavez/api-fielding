@@ -1,28 +1,29 @@
 import { v4 as uuidv4 } from 'uuid';
 
-export type RequestableType = 'http-request';
-export interface createRequest {
+export type RequestableType = 'http-request' | 'websocket-request';
+
+export interface PrimitiveRequest<T extends RequestableType> {
   resourceId: string;
   requestableId: string;
-  requestableType: RequestableType;
-  id?: string;
-}
-
-// optional id
-export interface PrimitiveRequest extends createRequest {
+  requestableType: T;
   id: string;
 }
 
-export class Request {
-  constructor(private attributes: PrimitiveRequest) {}
+export interface CreateRequest<T extends RequestableType>
+  extends Omit<PrimitiveRequest<T>, 'id'> {
+  id?: string;
+}
 
-  static create({
+export class Request<T extends RequestableType> {
+  constructor(private attributes: PrimitiveRequest<T>) {}
+
+  static create<T extends RequestableType>({
     id = uuidv4(),
     resourceId,
     requestableId,
     requestableType,
-  }: createRequest): Request {
-    return new Request({
+  }: CreateRequest<T>): Request<T> {
+    return new Request<T>({
       id,
       resourceId,
       requestableId,
@@ -30,7 +31,7 @@ export class Request {
     });
   }
 
-  toValue(): PrimitiveRequest {
+  toValue(): PrimitiveRequest<T> {
     return this.attributes;
   }
 

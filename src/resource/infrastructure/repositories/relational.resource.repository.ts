@@ -5,6 +5,7 @@ import { Injectable } from '@shared-dependencies';
 import ResourceModel from '../models/resource.model';
 import ResourceTypeModel from '../models/resource-type.model';
 import RequestModel from '../models/request.model';
+import { RequestableType } from '@/resource/domain/entities/request.entity';
 
 @Injectable()
 export class RelationalResourceRepository extends ResourceRepository {
@@ -65,25 +66,21 @@ export class RelationalResourceRepository extends ResourceRepository {
 
     return resource;
   }
-  async createRequest(request: Request): Promise<Request> {
-    const { resourceId, requestableType } = request.toValue();
-    let resRequestSaved;
+  async createRequest<T extends RequestableType>(
+    request: Request<T>,
+  ): Promise<Request<T>> {
+    const { resourceId, requestableId, requestableType } = request.toValue();
+    const resRequestSaved = await this.requestModel.create({
+      resourceId,
+      requestableId,
+      requestableType,
+    });
 
-    switch (requestableType) {
-      case 'http-request':
-        resRequestSaved = await this.requestModel.create({
-          resourceId,
-        });
-        break;
-      default:
-        throw new Error('Requestable type not found');
-    }
-
-    const newRequest = Request.create({
+    const newRequest = Request.create<typeof requestableType>({
       id: resRequestSaved.id,
       resourceId: resRequestSaved.resourceId,
-      requestableId: resRequestSaved.httpRequestId,
-      requestableType,
+      requestableId: resRequestSaved.requestableId,
+      requestableType: requestableType,
     });
 
     return newRequest;

@@ -15,6 +15,7 @@ import {
 } from 'src/resource/domain/respositories';
 
 import { CreateHttpRequestDto } from './create-http-request.dto';
+import { RequestableType } from '@/resource/domain/entities/request.entity';
 
 export class CreateHttpRequestUseCase {
   constructor(
@@ -41,9 +42,11 @@ export class CreateHttpRequestUseCase {
 
     const { id: httpRequestId } = httpRequestCreated.toValue();
 
-    const request = Request.create({
+    const requestableType: RequestableType = 'http-request';
+
+    const request = Request.create<typeof requestableType>({
       requestableId: httpRequestId,
-      requestableType: 'http-request',
+      requestableType: requestableType,
       resourceId,
     });
 
