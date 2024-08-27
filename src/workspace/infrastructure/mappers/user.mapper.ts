@@ -1,19 +1,23 @@
 import { User } from 'src/workspace/domain/entities/user.entity';
-import CollaboratorModel from '../models/collaborator.model';
-import { Role } from 'src/workspace/domain/entities/role.entity';
 import { Injectable } from 'src/shared/dependencies/injectable';
+import UserModel from '@/user/infrastructure/models/user.model';
+import { BaseMapper } from '@/workspace/domain/mappers/base.mapper';
 
 @Injectable()
-export class UserMapper {
-  toDomain(collaboratorModel: CollaboratorModel): User {
+export class UserMapper extends BaseMapper<User, UserModel> {
+  toPersistence(domain: User): UserModel {
+    const user = domain.toValue();
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    } as UserModel;
+  }
+  toDomain(userModel: UserModel): User {
     return new User({
-      id: collaboratorModel.id,
-      name: 'Test',
-      email: 'email test',
-      role: new Role({
-        id: collaboratorModel.role.id,
-        name: collaboratorModel.role.name,
-      }),
+      id: userModel.id,
+      name: userModel.name,
+      email: userModel.email,
     });
   }
 }
