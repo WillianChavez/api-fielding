@@ -2,10 +2,8 @@ import {
   BadRequestException,
   Body,
   Controller,
-  Get,
   InternalServerErrorException,
   Post,
-  UseGuards,
 } from '@nestjs/common';
 import { USER_ROUTE } from '../../routes/user.route';
 import { CreateUserHttpDto } from './create-user-http.dto';
@@ -14,9 +12,6 @@ import { EmailAlreadyExistException } from '@/user/domain/exceptions/email-alrea
 import { UserAlreadyExistException } from '@/user/domain/exceptions/user-already-exist.exception';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateUserResource } from './create-user.resource';
-import { AuthGuard } from '@nestjs/passport';
-import { GetUser } from '@/shared/auth/decorators/get-user.decorator';
-import UserModel from '../../models/user.model';
 
 @Controller(USER_ROUTE)
 @ApiTags(USER_ROUTE)
@@ -41,15 +36,5 @@ export class CreateUserController {
 
       throw new InternalServerErrorException(error);
     }
-  }
-
-  @Get('test')
-  @UseGuards(AuthGuard())
-  test(@GetUser(['email', 'name']) user: UserModel) {
-    return {
-      ok: true,
-      message: 'Hello ',
-      user,
-    };
   }
 }
