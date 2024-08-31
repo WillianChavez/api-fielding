@@ -3,6 +3,7 @@ import {
   IsEnum,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   ValidateIf,
 } from 'class-validator';
@@ -84,4 +85,13 @@ export class EnviromentVariables {
   @IsString()
   @ValidateIf((_, value) => (value ?? '').trim().length > 0)
   MAIL_FROM!: string;
+
+  @IsString()
+  @IsOptional()
+  URL_FRONT!: string;
+
+  @IsString()
+  @IsOptional()
+  @IsNumber()
+  EXP_TOKEN_LINK_WORKSPACE!: string | number;
 }

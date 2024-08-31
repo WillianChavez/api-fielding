@@ -7,3 +7,4 @@ export { MAIN_ROUTE };
 export { WORKSPACE_ROUTE };
 export const COLLABORATOR_ROUTE = `${MAIN_ROUTE}/${COLLABORATOR_ROUTE_NAME}`;
 export const ROLE_ROUTE = `${COLLABORATOR_ROUTE}/role`;
+export const LINK_ROUTE = `${WORKSPACE_ROUTE}/link`;
