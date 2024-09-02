@@ -3,8 +3,11 @@ import { CollaboratorRepository } from './domain/repositories/collaborator.repos
 import { CreateWorkspaceController } from './infrastructure/api/create-workspace/create-workspace.controller';
 import { CreateWorkspaceResource } from './infrastructure/api/create-workspace/create-workspace.resource';
 import { CreateWorkspaceUseCase } from './application/create-workspace-use-case/create-workspace-use-case';
+import { CryptService } from '@/shared/auth/services/crypt.service';
 import { DeleteMemberController } from './infrastructure/api/delete-member/delete-member.controller';
 import { DeleteMemberUseCase } from './application/delete-member-use-case/delete-member-use-case';
+import { LinkWorkspaceController } from './infrastructure/api/link-workspace/link-workspace.controller';
+import { LinkWorkspaceUseCase } from './application/link-workspace-use-case/link-workspace-use-case';
 import { ListCollaboratorController } from './infrastructure/api/list-collaborator/list-collaborator.controller';
 import { ListCollaboratorUseCase } from './application/list-collaborator-use-case/list-collaborator-use-case';
 import { ListRolCollaboratorController } from './infrastructure/api/list-rol-collaborator/list-rol-collaborator.controller';
@@ -20,6 +23,7 @@ import { RoleRepository } from './domain/repositories/role.repository';
 import { SeederModule } from 'nestjs-sequelize-seeder';
 import { SeedRol } from './infrastructure/seeders/rol.seed';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { TokenService } from './domain/services/token.service';
 import { UpdateRolMemberController } from './infrastructure/api/update-rol-member/update-rol-member.controller';
 import { UpdateRolMemberResource } from './infrastructure/api/update-rol-member/update-rol-member.resource';
 import { UpdateRolMemberUseCase } from './application/update-rol-member-use-case/update-rol-member-use-case';
@@ -36,6 +40,7 @@ import { ListRoleCollaboratorUseCase } from './application/list-role-collaborato
 @Module({
   controllers: [
     CreateWorkspaceController,
+    LinkWorkspaceController,
     ListRolCollaboratorController,
     ListCollaboratorController,
     ListWorkspaceController,
@@ -57,7 +62,9 @@ import { ListRoleCollaboratorUseCase } from './application/list-role-collaborato
     CollaboratorMapper,
     CreateWorkspaceResource,
     CreateWorkspaceUseCase,
+    CryptService,
     DeleteMemberUseCase,
+    LinkWorkspaceUseCase,
     ListCollaboratorUseCase,
     ListRoleCollaboratorUseCase,
     ListWorkspaceResource,
@@ -81,6 +88,10 @@ import { ListRoleCollaboratorUseCase } from './application/list-role-collaborato
     {
       provide: CollaboratorRepository,
       useExisting: RelationalCollaboratorRepository,
+    },
+    {
+      provide: TokenService,
+      useClass: CryptService,
     },
   ],
   exports: [
