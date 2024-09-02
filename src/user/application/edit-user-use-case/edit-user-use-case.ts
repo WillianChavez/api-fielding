@@ -2,7 +2,7 @@ import { Injectable } from '@/shared/dependencies';
 import { EditUserDto } from './edit-user.dto';
 import { UserRepository } from '@/user/domain/repositories/user.repository';
 import { PrimitiveUser, User } from '@/user/domain/entities/user.entity';
-import { EmailNoExistException } from '@/user/domain/exceptions/email-no-exist.exception';
+import { UserNoExistException } from '@/user/domain/exceptions/user-no-exist.exception';
 
 @Injectable()
 export class EditUserUseCase {
@@ -11,11 +11,9 @@ export class EditUserUseCase {
   async run(editUserDto: EditUserDto): Promise<{ user: PrimitiveUser }> {
     const user = User.create(editUserDto);
 
-    const userExists = await this.userRepository.findByEmail(
-      user.toValue().email,
-    );
+    const userExists = await this.userRepository.findById(user.toValue().id);
 
-    if (!userExists) throw new EmailNoExistException();
+    if (!userExists) throw new UserNoExistException();
 
     const userUpdated = await this.userRepository.update(user);
 

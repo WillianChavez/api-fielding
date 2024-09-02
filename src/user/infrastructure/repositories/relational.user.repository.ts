@@ -46,4 +46,17 @@ export class RelationalUserRepository extends UserRepository {
 
     return user;
   }
+
+  async findById(id: string): Promise<User | null> {
+    const userById = await this.userModel.findByPk(id);
+
+    if (!userById) return null;
+
+    return User.create({
+      id: userById.id,
+      name: userById.name,
+      email: userById.email,
+      password: userById.password,
+    });
+  }
 }

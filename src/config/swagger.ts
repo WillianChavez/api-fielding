@@ -14,6 +14,10 @@ export function swaggerInit(app: NestApplication, options?: SwaggerOptions) {
     .setDescription(options?.description || 'API description')
     .setVersion(options?.version || '1.0')
     .addTag(options?.tag || 'API')
+    .addSecurity('bearer', {
+      type: 'http',
+      scheme: 'bearer',
+    })
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
