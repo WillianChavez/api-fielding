@@ -65,7 +65,7 @@ export class EditUserController {
     @UploadedFile(
       new ParseFilePipeBuilder()
         .addMaxSizeValidator({ maxSize: 2097152 }) //2MB
-        .build(),
+        .build({ fileIsRequired: false }),
     )
     avatar: Express.Multer.File,
     @Body() editUserHttpDto: EditUserHttpDto,

@@ -7,6 +7,7 @@ export interface EditUserHttpResourceJson {
     id: string;
     email: string;
     name: string;
+    urlPhoto?: string;
   };
 }
 
@@ -15,7 +16,12 @@ export class EditUserResource {
   toJson(user: PrimitiveUser): EditUserHttpResourceJson {
     return {
       message: 'User updated successfully',
-      user: { id: user.id, email: user.email, name: user.name },
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        urlPhoto: user.urlPhoto,
+      },
     };
   }
 }
