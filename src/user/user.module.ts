@@ -13,12 +13,17 @@ import { LoginController } from './infrastructure/api/login/login.controller';
 import { LoginUserUseCase } from './application/login-user-use-case/login-user-use-case';
 import { AuthModule } from '@/shared/auth/auth.module';
 import { LoginUserResource } from './infrastructure/api/login/login-user.resource';
+import { EditUserController } from './infrastructure/api/edit-user/edit-user.controller';
+import { EditUserUseCase } from './application/edit-user-use-case/edit-user-use-case';
+import { EditUserResource } from './infrastructure/api/edit-user/edit-user.resource';
 
 @Module({
-  controllers: [CreateUserController, LoginController],
+  controllers: [CreateUserController, LoginController, EditUserController],
   providers: [
     RelationalUserRepository,
     CreateUserUseCase,
+    EditUserUseCase,
+    EditUserResource,
     CreateUserResource,
     LoginUserUseCase,
     AuthService,

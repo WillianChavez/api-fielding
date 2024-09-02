@@ -36,4 +36,27 @@ export class RelationalUserRepository extends UserRepository {
       password: userByEmail.password,
     });
   }
+
+  async update(user: User): Promise<User> {
+    const userData = user.toValue();
+
+    await this.userModel.update(userData, {
+      where: { id: userData.id },
+    });
+
+    return user;
+  }
+
+  async findById(id: string): Promise<User | null> {
+    const userById = await this.userModel.findByPk(id);
+
+    if (!userById) return null;
+
+    return User.create({
+      id: userById.id,
+      name: userById.name,
+      email: userById.email,
+      password: userById.password,
+    });
+  }
 }
