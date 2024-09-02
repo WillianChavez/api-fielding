@@ -3,6 +3,7 @@ import { UserRepository } from '@/user/domain/repositories/user.repository';
 import { Injectable } from 'src/shared/dependencies/injectable';
 import UserModel from '../models/user.model';
 import { User } from '@/user/domain/entities/user.entity';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class RelationalUserRepository extends UserRepository {
@@ -22,10 +23,15 @@ export class RelationalUserRepository extends UserRepository {
     return newUser;
   }
 
-  async findByEmail(email: string): Promise<User | null> {
-    const userByEmail = await this.userModel
-      .unscoped()
-      .findOne({ where: { email } });
+  async findByEmail(email: string, ignore?: string): Promise<User | null> {
+    const userByEmail = await this.userModel.unscoped().findOne({
+      where: {
+        email,
+        id: {
+          [Op.ne]: ignore,
+        },
+      },
+    });
 
     if (!userByEmail) return null;
 
