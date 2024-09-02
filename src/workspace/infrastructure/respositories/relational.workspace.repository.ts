@@ -50,4 +50,16 @@ export class RelationalWorkspaceRepository extends WorkspaceRepository {
 
     return this.workspaceMapper.toDomain(workspace);
   }
+
+  async updateHash(id: string, hash: string): Promise<boolean> {
+    const workspace = await this.workspaceModel.findByPk(id);
+
+    if (!workspace) return false;
+
+    workspace.link_hash = hash;
+
+    await workspace.save();
+
+    return true;
+  }
 }

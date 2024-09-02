@@ -3,4 +3,5 @@ export abstract class WorkspaceRepository {
   abstract create(workspace: Workspace): Promise<Workspace>;
   abstract listByUser(options: { user: string }): Promise<Workspace[]>;
   abstract findById(id: string): Promise<Workspace | null>;
+  abstract updateHash(id: string, hash: string): Promise<boolean>;
 }
