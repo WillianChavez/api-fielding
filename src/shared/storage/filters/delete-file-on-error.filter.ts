@@ -4,7 +4,7 @@ import {
   ExceptionFilter,
   HttpException,
 } from '@nestjs/common';
-import { StorageService } from '../services/storage.service';
+import { StorageService } from '../domain/services/storage.service';
 import { Request, Response } from 'express';
 
 @Catch(HttpException)
