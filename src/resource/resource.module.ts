@@ -15,6 +15,11 @@ import { SeederModule } from 'nestjs-sequelize-seeder';
 import { SeedAuthorizationType } from './infrastructure/seeders/authorization-type.seed';
 import { SeedMethod } from './infrastructure/seeders/method.seed';
 import { SeedResourceType } from './infrastructure/seeders/resource-type.seed';
+import { CreateHttpRequestController } from './infrastructure/api/create-http-request/create-http-request.controller';
+import { CreateHttpRequestUseCase } from './applitacion/create-http-request-use-case/create-http-request-use-case';
+import { CreateResourceUseCase } from './applitacion/create-resource-use-case/create-resource-use-case';
+import { ResourceRepository } from './domain/respositories';
+import { RelationalResourceRepository } from './infrastructure/repositories/relational.resource.repository';
 
 @Module({
   imports: [
@@ -37,5 +42,15 @@ import { SeedResourceType } from './infrastructure/seeders/resource-type.seed';
       SeedResourceType,
     ]),
   ],
+  providers: [
+    CreateHttpRequestUseCase,
+    CreateResourceUseCase,
+    RelationalResourceRepository,
+    {
+      provide: ResourceRepository,
+      useExisting: RelationalResourceRepository,
+    },
+  ],
+  controllers: [CreateHttpRequestController],
 })
 export class ResourceModule {}

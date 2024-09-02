@@ -1,10 +1,8 @@
-import {
-  MethodNoExistException,
-  ResourceNoExistException,
-} from 'src/resource/domain/exceptions';
+import { ResourceNoExistException } from 'src/resource/domain/exceptions';
 
 import {
   HttpRequest,
+  Method,
   PrimitiveHttpRequest,
   Request,
 } from 'src/resource/domain/entities';
@@ -26,15 +24,19 @@ export class CreateHttpRequestUseCase {
   async run(dto: CreateHttpRequestDto): Promise<PrimitiveHttpRequest> {
     const { methodId, resourceId, url } = dto;
 
-    const method = await this.httpRequestRepository.findMethodById(methodId);
-    if (!method) throw new MethodNoExistException(methodId);
+    let method: Method;
+    if (methodId) {
+      method = await this.httpRequestRepository.findMethodById(methodId);
+    } else {
+      method = await this.httpRequestRepository.findMethodByName('GET');
+    }
 
     const resource = await this.resourceRepository.findById(resourceId);
     if (!resource) throw new ResourceNoExistException(resourceId);
 
     const httpRequest = HttpRequest.create({
       url,
-      methodId: methodId,
+      methodId: method.toValue().id,
     });
 
     const httpRequestCreated =

@@ -1,5 +1,5 @@
 export interface PrimitiveMethod {
-  id: number;
+  id: string;
   name: string;
 }
 

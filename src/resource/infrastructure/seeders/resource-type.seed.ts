@@ -1,3 +1,4 @@
+import { ResourceTypeName } from '@/resource/domain/entities/resource-type.entity';
 import { OnSeederInit, Seeder } from 'nestjs-sequelize-seeder';
 
 @Seeder({
@@ -6,9 +7,15 @@ import { OnSeederInit, Seeder } from 'nestjs-sequelize-seeder';
 })
 export class SeedResourceType implements OnSeederInit {
   run() {
-    const resourceTypes = [
+    const resourceTypes: { name: ResourceTypeName }[] = [
       {
-        name: 'Http request',
+        name: 'request',
+      },
+      {
+        name: 'folder',
+      },
+      {
+        name: 'project',
       },
     ];
 

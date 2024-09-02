@@ -9,6 +9,7 @@ export interface CreateResource {
   description?: string;
   parentResourceId?: number;
   resources?: Resource[];
+  workspaceId: number;
 }
 
 export interface PrimitiveResource extends CreateResource {
@@ -25,6 +26,7 @@ export class Resource {
     description,
     parentResourceId,
     resources,
+    workspaceId,
   }: CreateResource): Resource {
     return new Resource({
       id,
@@ -34,6 +36,7 @@ export class Resource {
       description,
       parentResourceId,
       resources,
+      workspaceId,
     });
   }
 

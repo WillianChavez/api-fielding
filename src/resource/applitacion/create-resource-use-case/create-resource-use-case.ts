@@ -5,20 +5,23 @@ import {
   PrimitiveResource,
   Resource,
 } from 'src/resource/domain/entities/resource.entity';
-import { ResourceTypeNoExistException } from 'src/resource/domain/exceptions/resource-type-no-exist.exception';
 
 @Injectable()
 export class CreateResourceUseCase {
   constructor(private resourceRepository: ResourceRepository) {}
 
   async run(createResourceDto: CreateResourceDto): Promise<PrimitiveResource> {
-    const { resourceTypeId, name, order, description, parentResourceId } =
-      createResourceDto;
+    const {
+      resourceTypeName,
+      name,
+      order,
+      description,
+      parentResourceId,
+      workspaceId,
+    } = createResourceDto;
 
     const resourceType =
-      await this.resourceRepository.findResourceTypeById(resourceTypeId);
-
-    if (!resourceType) throw new ResourceTypeNoExistException(resourceTypeId);
+      await this.resourceRepository.findResourceTypeByName(resourceTypeName);
 
     const resource: Resource = Resource.create({
       name,
@@ -26,6 +29,7 @@ export class CreateResourceUseCase {
       description,
       resourceType: resourceType.toValue(),
       parentResourceId,
+      workspaceId,
     });
 
     const resourceSaved: Resource =

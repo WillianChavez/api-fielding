@@ -1,25 +1,27 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
-export class CreateHttpRequestDto {
+export class CreateHttpRequesHttpDto {
   @ApiProperty()
   @IsNotEmpty()
-  @IsUUID()
-  methodId: string;
-
-  @ApiProperty()
-  @IsString()
-  url?: string;
-
-  @ApiProperty()
   @IsInt()
   order: number;
 
   @ApiProperty()
+  @IsNotEmpty()
   @IsString()
   name: string;
 
   @ApiProperty()
+  @IsNotEmpty()
   @IsUUID()
-  resourceTypeId: string;
+  workspaceId: number;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  url?: string;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  parentResourceId?: number;
 }

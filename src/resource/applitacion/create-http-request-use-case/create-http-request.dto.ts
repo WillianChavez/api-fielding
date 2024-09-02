@@ -1,5 +1,5 @@
 export interface CreateHttpRequestDto {
-  methodId: string;
+  methodId?: string;
   resourceId: string;
   url?: string;
 }

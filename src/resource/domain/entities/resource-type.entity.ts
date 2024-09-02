@@ -1,6 +1,7 @@
+export type ResourceTypeName = 'request' | 'folder' | 'project';
 export interface PrimitiveResourceType {
   id: string;
-  name: string;
+  name: ResourceTypeName;
 }
 
 export class ResourceType {

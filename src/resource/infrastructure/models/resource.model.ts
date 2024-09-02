@@ -16,6 +16,7 @@ import {
 
 import { UUID } from '@shared-decorators';
 import ResourceTypeModel from './resource-type.model';
+import WorkspaceModel from '@/workspace/infrastructure/models/workspace.model';
 @Table({
   tableName: 'mnt_resource',
   underscored: true,
@@ -65,4 +66,11 @@ export default class ResourceModel extends Model<ResourceModel> {
 
   @HasMany(() => ResourceModel)
   children: ResourceModel[];
+
+  @ForeignKey(() => WorkspaceModel)
+  @UUID
+  workspaceId: number;
+
+  @BelongsTo(() => WorkspaceModel)
+  workspace: WorkspaceModel;
 }

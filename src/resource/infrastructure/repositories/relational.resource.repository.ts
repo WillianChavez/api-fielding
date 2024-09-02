@@ -6,6 +6,7 @@ import ResourceModel from '../models/resource.model';
 import ResourceTypeModel from '../models/resource-type.model';
 import RequestModel from '../models/request.model';
 import { RequestableType } from '@/resource/domain/entities/request.entity';
+import { ResourceTypeName } from '@/resource/domain/entities/resource-type.entity';
 
 @Injectable()
 export class RelationalResourceRepository extends ResourceRepository {
@@ -22,12 +23,28 @@ export class RelationalResourceRepository extends ResourceRepository {
     super();
   }
 
+  async findResourceTypeByName(
+    name: ResourceTypeName,
+  ): Promise<ResourceType | null> {
+    const filterName = '%' + name + '%';
+    const resResourceType = await this.resourceTypeModel.findOne({
+      where: { name: filterName },
+    });
+    const resourceType = ResourceType.create({
+      id: resResourceType.id,
+      name: resResourceType.name as ResourceTypeName,
+    });
+
+    return resourceType;
+  }
+
   async create(resource: Resource): Promise<Resource> {
-    const { name, order, resourceType } = resource.toValue();
+    const { name, order, resourceType, workspaceId } = resource.toValue();
     const resResourceSaved = await this.resourceModel.create({
       name,
       order,
       resourceTypeId: resourceType.id,
+      workspaceId,
     });
 
     const newResource = Resource.create({
@@ -35,6 +52,7 @@ export class RelationalResourceRepository extends ResourceRepository {
       name: resResourceSaved.name,
       order: resResourceSaved.order,
       resourceType: resourceType,
+      workspaceId,
     });
 
     return newResource;
@@ -45,7 +63,7 @@ export class RelationalResourceRepository extends ResourceRepository {
 
     const resourceType = ResourceType.create({
       id: resResourceType.id,
-      name: resResourceType.name,
+      name: resResourceType.name as ResourceTypeName,
     });
 
     return resourceType;
@@ -62,6 +80,7 @@ export class RelationalResourceRepository extends ResourceRepository {
       name: resResource.name,
       resourceType: resourceType.toValue(),
       order: resResource.order,
+      workspaceId: resResource.workspaceId,
     });
 
     return resource;
