@@ -13,9 +13,10 @@ import { LoginController } from './infrastructure/api/login/login.controller';
 import { LoginUserUseCase } from './application/login-user-use-case/login-user-use-case';
 import { AuthModule } from '@/shared/auth/auth.module';
 import { LoginUserResource } from './infrastructure/api/login/login-user.resource';
+import { EditUserController } from './infrastructure/api/edit-user/edit-user.controller';
 
 @Module({
-  controllers: [CreateUserController, LoginController],
+  controllers: [CreateUserController, LoginController, EditUserController],
   providers: [
     RelationalUserRepository,
     CreateUserUseCase,

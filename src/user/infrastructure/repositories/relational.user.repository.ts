@@ -36,4 +36,14 @@ export class RelationalUserRepository extends UserRepository {
       password: userByEmail.password,
     });
   }
+
+  async update(user: User): Promise<User> {
+    const userData = user.toValue();
+
+    await this.userModel.update(userData, {
+      where: { id: userData.id },
+    });
+
+    return user;
+  }
 }
