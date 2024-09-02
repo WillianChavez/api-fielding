@@ -1,4 +1,4 @@
 export interface ListCollaboratorDto {
-  user: string;
   name?: string;
+  user: string;
 }
