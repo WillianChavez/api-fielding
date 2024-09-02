@@ -1,6 +1,9 @@
 import {
+  BadRequestException,
   Body,
   Controller,
+  InternalServerErrorException,
+  NotFoundException,
   ParseFilePipeBuilder,
   Put,
   Request,
@@ -22,6 +25,8 @@ import {
   EditUserResource,
 } from './edit-user.resource';
 import { StorageService } from '@/shared/storage/domain/services/storage.service';
+import { UserNoExistException } from '@/user/domain/exceptions/user-no-exist.exception';
+import { EmailAlreadyExistException } from '@/user/domain/exceptions/email-already-exist.exception';
 
 @Controller(USER_ROUTE)
 @ApiTags(USER_ROUTE)
@@ -70,17 +75,31 @@ export class EditUserController {
     avatar: Express.Multer.File,
     @Body() editUserHttpDto: EditUserHttpDto,
   ): Promise<EditUserHttpResourceJson> {
-    const { id, urlPhoto } = request.user;
+    try {
+      const { id, urlPhoto } = request.user;
 
-    if (urlPhoto && avatar)
-      await this.storageService.delete(`./uploads/${urlPhoto}`);
+      console.log('id', {
+        id,
+        urlPhoto,
+      });
+      if (urlPhoto && avatar)
+        await this.storageService.delete(`./uploads/${urlPhoto}`);
 
-    const { user } = await this.editUserUseCase.run({
-      id,
-      urlPhoto: avatar?.filename,
-      ...editUserHttpDto,
-    });
+      const { user } = await this.editUserUseCase.run({
+        id,
+        urlPhoto: avatar?.filename,
+        ...editUserHttpDto,
+      });
 
-    return this.editUserResource.toJson(user);
+      return this.editUserResource.toJson(user);
+    } catch (error) {
+      if (error instanceof UserNoExistException)
+        throw new NotFoundException(error.message);
+
+      if (error instanceof EmailAlreadyExistException)
+        throw new BadRequestException(error.message);
+
+      throw new InternalServerErrorException(error);
+    }
   }
 }
