@@ -1,5 +1,5 @@
 import * as fsp from 'fs/promises';
-import { StorageService } from './storage.service';
+import { StorageService } from '../domain/services/storage.service';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
