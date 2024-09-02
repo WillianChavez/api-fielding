@@ -1,7 +1,7 @@
 import { Global, Module } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
 import { StorageConfig } from './config/storage.config';
-import { StorageService } from './services/storage.service';
+import { StorageService } from './domain/services/storage.service';
 import { StorageLocalService } from './services/storage-local.service';
 
 @Global()
