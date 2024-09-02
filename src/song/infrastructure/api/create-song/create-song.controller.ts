@@ -11,7 +11,7 @@ import { SongAlreadyExistException } from 'src/song/domain/exceptions/song-alrea
 import { SONG_ROUTE } from '../../routes/song.route';
 import { ApiTags } from '@nestjs/swagger';
 import { Roles } from '@/shared/auth/decorators/roles.decorator';
-import { Role } from '@/shared/auth/interface/valid-roles';
+import { Role } from '@/shared/auth/interface/role.enum';
 
 @ApiTags(SONG_ROUTE)
 @Controller(SONG_ROUTE)
