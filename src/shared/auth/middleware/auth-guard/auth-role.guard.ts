@@ -33,7 +33,17 @@ export class RolesGuard implements CanActivate {
     if (!token || type.toLowerCase() !== 'bearer') {
       throw new BadRequestException('Token or type is missing');
     }
-    const payload = this.JwtService.decode(token);
+    let payload;
+
+    try {
+      payload = this.JwtService.verify(token);
+    } catch (error) {
+      throw new BadRequestException('Token invalid');
+    }
+
+    if (!payload.id || !payload.collaboratorId) {
+      throw new BadRequestException('Token invalid');
+    }
 
     const user = await this.userModel.findOne({
       where: {
