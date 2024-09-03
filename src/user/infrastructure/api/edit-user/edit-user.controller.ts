@@ -78,10 +78,6 @@ export class EditUserController {
     try {
       const { id, urlPhoto } = request.user;
 
-      console.log('id', {
-        id,
-        urlPhoto,
-      });
       if (urlPhoto && avatar)
         await this.storageService.delete(`./uploads/${urlPhoto}`);
 

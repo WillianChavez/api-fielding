@@ -10,18 +10,15 @@ export class EditUserUseCase {
   constructor(private readonly userRepository: UserRepository) {}
 
   async run(editUserDto: EditUserDto): Promise<{ user: PrimitiveUser }> {
-    const user = User.create(editUserDto);
-
-    const { id, email } = user.toValue();
-
-    const userExists = await this.userRepository.findById(id);
+    const userExists = await this.userRepository.findById(editUserDto.id);
 
     if (!userExists) throw new UserNoExistException();
 
-    const emailExists = await this.userRepository.findByEmail(
-      email ?? userExists.toValue().email,
-      id,
-    );
+    const user = User.update(userExists, editUserDto);
+
+    const { id, email } = user.toValue();
+
+    const emailExists = await this.userRepository.findByEmail(email, id);
 
     if (emailExists) throw new EmailAlreadyExistException();
 

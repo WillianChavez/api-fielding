@@ -63,6 +63,7 @@ export class RelationalUserRepository extends UserRepository {
       name: userById.name,
       email: userById.email,
       password: userById.password,
+      urlPhoto: userById.urlPhoto,
     });
   }
 }
