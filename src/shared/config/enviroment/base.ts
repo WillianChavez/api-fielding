@@ -6,6 +6,8 @@ export default registerAs('', () => ({
   host: process.env.HOST,
   port: process.env.PORT || 3000,
   url: 'http://' + process.env.HOST + ':' + process.env.PORT,
+  urlFront: process.env.URL_FRONT || 'http://localhost:3000',
+  expTokenLinkWorkspace: process.env.EXP_TOKEN_LINK_WORKSPACE || '1h',
   appEnv: process.env.APP_ENV,
   secretKey: process.env.SECRET_KEY,
   db: {
