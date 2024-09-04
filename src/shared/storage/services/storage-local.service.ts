@@ -18,9 +18,9 @@ export class StorageLocalService extends StorageService<Buffer> {
 
   async delete(uri: string): Promise<void> {
     const exists = await this.exists(uri);
-    if (!exists) throw new Error(`File not found: ${uri}`);
+    if (!exists) console.error(`File not found: ${uri}`);
     await fsp.unlink(uri).catch((error) => {
-      throw new Error(`Error deleting file: ${uri}. ${error.message}`);
+      console.error(`Error deleting file: ${uri}. ${error.message}`);
     });
   }
 }
