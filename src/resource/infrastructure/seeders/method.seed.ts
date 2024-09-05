@@ -1,7 +1,8 @@
 import { OnSeederInit, Seeder } from 'nestjs-sequelize-seeder';
+import MethodModel from '../models/method.model';
 
 @Seeder({
-  model: 'MethodModel',
+  model: MethodModel,
   enableAutoId: false,
 })
 export class SeedMethod implements OnSeederInit {

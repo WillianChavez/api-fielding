@@ -14,8 +14,9 @@ import ResourceModel from './resource.model';
   underscored: true,
   paranoid: true,
   timestamps: true,
+  modelName: 'ResourceTypeModel',
 })
-export default class ResourceTypeModel extends Model<ResourceTypeModel> {
+export default class ResourceTypeModel extends Model {
   @PrimaryKey
   @UUID
   id: string;

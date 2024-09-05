@@ -28,6 +28,7 @@ export class CreateHttpRequestController {
         resourceId: resource.id,
       });
     } catch (error) {
+      console.log(error);
       return new BadRequestException(error.message);
     }
   }

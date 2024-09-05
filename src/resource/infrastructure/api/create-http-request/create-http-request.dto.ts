@@ -15,7 +15,7 @@ export class CreateHttpRequesHttpDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsUUID()
-  workspaceId: number;
+  workspaceId: string;
 
   @ApiProperty({ required: false })
   @IsString()
@@ -23,5 +23,5 @@ export class CreateHttpRequesHttpDto {
 
   @ApiProperty({ required: false })
   @IsString()
-  parentResourceId?: number;
+  parentResourceId?: string;
 }

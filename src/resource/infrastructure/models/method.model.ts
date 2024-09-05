@@ -17,8 +17,9 @@ import HttpRequestModel from './http-request.model';
   underscored: true,
   paranoid: true,
   timestamps: true,
+  modelName: 'MethodModel',
 })
-export default class MethodModel extends Model<MethodModel> {
+export default class MethodModel extends Model {
   @PrimaryKey
   @UUID
   id: string;

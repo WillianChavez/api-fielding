@@ -22,6 +22,7 @@ import WorkspaceModel from '@/workspace/infrastructure/models/workspace.model';
   underscored: true,
   paranoid: true,
   timestamps: true,
+  modelName: 'ResourceModel',
 })
 export default class ResourceModel extends Model<ResourceModel> {
   @PrimaryKey
@@ -69,7 +70,7 @@ export default class ResourceModel extends Model<ResourceModel> {
 
   @ForeignKey(() => WorkspaceModel)
   @UUID
-  workspaceId: number;
+  workspaceId: string;
 
   @BelongsTo(() => WorkspaceModel)
   workspace: WorkspaceModel;

@@ -5,6 +5,6 @@ export interface CreateResourceDto {
   name: string;
   resourceTypeName: ResourceTypeName;
   description?: string;
-  parentResourceId?: number;
-  workspaceId: number;
+  parentResourceId?: string;
+  workspaceId: string;
 }

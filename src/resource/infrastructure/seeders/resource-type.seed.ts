@@ -1,9 +1,11 @@
 import { ResourceTypeName } from '@/resource/domain/entities/resource-type.entity';
 import { OnSeederInit, Seeder } from 'nestjs-sequelize-seeder';
+import ResourceTypeModel from '../models/resource-type.model';
 
 @Seeder({
-  model: 'ResourceTypeModel',
+  model: ResourceTypeModel,
   enableAutoId: false,
+  unique: ['name'],
 })
 export class SeedResourceType implements OnSeederInit {
   run() {

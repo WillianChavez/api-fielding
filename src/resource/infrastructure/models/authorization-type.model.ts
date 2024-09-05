@@ -17,7 +17,7 @@ import AuthorizationModel from './authorization.model';
   paranoid: true,
   timestamps: true,
 })
-export default class AuthorizationTypeModel extends Model<AuthorizationTypeModel> {
+export default class AuthorizationTypeModel extends Model {
   @PrimaryKey
   @UUID
   id: string;

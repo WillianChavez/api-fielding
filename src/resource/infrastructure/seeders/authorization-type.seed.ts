@@ -1,7 +1,8 @@
 import { OnSeederInit, Seeder } from 'nestjs-sequelize-seeder';
+import AuthorizationTypeModel from '../models/authorization-type.model';
 
 @Seeder({
-  model: 'AuthorizationTypeModel',
+  model: AuthorizationTypeModel,
   enableAutoId: false,
 })
 export class SeedAuthorizationType implements OnSeederInit {

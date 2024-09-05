@@ -7,9 +7,9 @@ export interface CreateResource {
   order: number;
   name: string;
   description?: string;
-  parentResourceId?: number;
+  parentResourceId?: string;
   resources?: Resource[];
-  workspaceId: number;
+  workspaceId: string;
 }
 
 export interface PrimitiveResource extends CreateResource {
