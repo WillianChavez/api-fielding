@@ -19,6 +19,9 @@ export class SeedResourceType implements OnSeederInit {
       {
         name: 'project',
       },
+      {
+        name: 'environment',
+      },
     ];
 
     return resourceTypes;

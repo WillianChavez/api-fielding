@@ -15,4 +15,13 @@ export abstract class ResourceRepository {
   abstract createRequest<T extends RequestableType>(
     request: Request<T>,
   ): Promise<Request<T>>;
+
+  abstract list(filter: {
+    idTypesResource?: string[];
+    workspaceId: string;
+  }): Promise<Resource[]>;
+
+  abstract listResourcesType(filter: {
+    name?: string[];
+  }): Promise<ResourceType[]>;
 }
