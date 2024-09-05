@@ -18,8 +18,12 @@ import { SeedResourceType } from './infrastructure/seeders/resource-type.seed';
 import { CreateHttpRequestController } from './infrastructure/api/create-http-request/create-http-request.controller';
 import { CreateHttpRequestUseCase } from './applitacion/create-http-request-use-case/create-http-request-use-case';
 import { CreateResourceUseCase } from './applitacion/create-resource-use-case/create-resource-use-case';
-import { ResourceRepository } from './domain/respositories';
+import {
+  RequestHttpRepository,
+  ResourceRepository,
+} from './domain/respositories';
 import { RelationalResourceRepository } from './infrastructure/repositories/relational.resource.repository';
+import { RelationalRequestHttpRepository } from './infrastructure/repositories/relational.request-http.repository';
 
 @Module({
   imports: [
@@ -46,9 +50,14 @@ import { RelationalResourceRepository } from './infrastructure/repositories/rela
     CreateHttpRequestUseCase,
     CreateResourceUseCase,
     RelationalResourceRepository,
+    RelationalRequestHttpRepository,
     {
       provide: ResourceRepository,
       useExisting: RelationalResourceRepository,
+    },
+    {
+      provide: RequestHttpRepository,
+      useExisting: RelationalRequestHttpRepository,
     },
   ],
   controllers: [CreateHttpRequestController],

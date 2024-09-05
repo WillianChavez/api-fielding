@@ -8,19 +8,22 @@ import {
 } from 'src/resource/domain/entities';
 
 import {
-  HttpRequestRepository,
+  RequestHttpRepository,
   ResourceRepository,
 } from 'src/resource/domain/respositories';
 
 import { CreateHttpRequestDto } from './create-http-request.dto';
 import { RequestableType } from '@/resource/domain/entities/request.entity';
+import { Injectable, Transactional } from '@shared-dependencies';
 
+@Injectable()
 export class CreateHttpRequestUseCase {
   constructor(
-    private httpRequestRepository: HttpRequestRepository,
+    private httpRequestRepository: RequestHttpRepository,
     private readonly resourceRepository: ResourceRepository,
   ) {}
 
+  @Transactional()
   async run(dto: CreateHttpRequestDto): Promise<PrimitiveHttpRequest> {
     const { methodId, resourceId, url } = dto;
 

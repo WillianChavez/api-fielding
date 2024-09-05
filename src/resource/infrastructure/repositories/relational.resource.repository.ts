@@ -26,7 +26,7 @@ export class RelationalResourceRepository extends ResourceRepository {
   async findResourceTypeByName(
     name: ResourceTypeName,
   ): Promise<ResourceType | null> {
-    const filterName = '%' + name + '%';
+    const filterName = name as string;
     const resResourceType = await this.resourceTypeModel.findOne({
       where: { name: filterName },
     });
@@ -39,12 +39,15 @@ export class RelationalResourceRepository extends ResourceRepository {
   }
 
   async create(resource: Resource): Promise<Resource> {
-    const { name, order, resourceType, workspaceId } = resource.toValue();
+    const { name, order, resourceType, workspaceId, parentResourceId } =
+      resource.toValue();
+
     const resResourceSaved = await this.resourceModel.create({
       name,
       order,
       resourceTypeId: resourceType.id,
       workspaceId,
+      parentResourceId,
     });
 
     const newResource = Resource.create({
@@ -53,6 +56,7 @@ export class RelationalResourceRepository extends ResourceRepository {
       order: resResourceSaved.order,
       resourceType: resourceType,
       workspaceId,
+      parentResourceId: resResourceSaved.parentResourceId,
     });
 
     return newResource;

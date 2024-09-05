@@ -1,4 +1,4 @@
-import { Injectable } from '@shared-dependencies';
+import { Injectable, Transactional } from '@shared-dependencies';
 import { ResourceRepository } from 'src/resource/domain/respositories/resource.repository';
 import { CreateResourceDto } from './create-resource.dto';
 import {
@@ -10,13 +10,14 @@ import {
 export class CreateResourceUseCase {
   constructor(private resourceRepository: ResourceRepository) {}
 
+  @Transactional()
   async run(createResourceDto: CreateResourceDto): Promise<PrimitiveResource> {
     const {
       resourceTypeName,
       name,
       order,
       description,
-      parentResourceId,
+      parentResourceId = null,
       workspaceId,
     } = createResourceDto;
 
