@@ -7,6 +7,7 @@ import ResourceTypeModel from '../models/resource-type.model';
 import RequestModel from '../models/request.model';
 import { RequestableType } from '@/resource/domain/entities/request.entity';
 import { ResourceTypeName } from '@/resource/domain/entities/resource-type.entity';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class RelationalResourceRepository extends ResourceRepository {
@@ -107,5 +108,60 @@ export class RelationalResourceRepository extends ResourceRepository {
     });
 
     return newRequest;
+  }
+
+  async list(filter: {
+    workspaceId: string;
+    typesResourceIds?: string[];
+  }): Promise<Resource[]> {
+    const resResources = await this.resourceModel.findAll({
+      where: {
+        resourceTypeId: filter?.typesResourceIds,
+        workspaceId: filter.workspaceId,
+      },
+      include: [
+        {
+          model: ResourceTypeModel,
+          as: 'resourceType',
+        },
+      ],
+    });
+
+    const resources = resResources.map((resResource) => {
+      return Resource.create({
+        id: resResource.id,
+        name: resResource.name,
+        order: resResource.order,
+        workspaceId: resResource.workspaceId,
+        parentResourceId: resResource.parentResourceId,
+        resourceType: ResourceType.create({
+          id: resResource.resourceType.id,
+          name: resResource.resourceType.name as ResourceTypeName,
+        }).toValue(),
+      });
+    });
+
+    return resources;
+  }
+
+  async listResourcesType(filter: {
+    name?: string[];
+  }): Promise<ResourceType[]> {
+    const resResourceTypes = await this.resourceTypeModel.findAll({
+      where: {
+        name: {
+          [Op.in]: filter.name,
+        },
+      },
+    });
+
+    const resourceTypes = resResourceTypes.map((resResourceType) => {
+      return ResourceType.create({
+        id: resResourceType.id,
+        name: resResourceType.name as ResourceTypeName,
+      });
+    });
+
+    return resourceTypes;
   }
 }
