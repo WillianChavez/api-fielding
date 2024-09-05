@@ -10,6 +10,7 @@ import {
   HasMany,
 } from 'sequelize-typescript';
 import CollaboratorModel from './collaborator.model';
+import ResourceModel from '@/resource/infrastructure/models/resource.model';
 
 @Table({
   tableName: 'mnt_workspace',
@@ -54,4 +55,7 @@ export default class WorkspaceModel extends Model<WorkspaceModel> {
 
   @DeletedAt
   deleted_at: Date;
+
+  @HasMany(() => ResourceModel)
+  resources: ResourceModel[];
 }

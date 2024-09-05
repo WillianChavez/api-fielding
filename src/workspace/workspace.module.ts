@@ -11,7 +11,6 @@ import { LinkWorkspaceUseCase } from './application/link-workspace-use-case/link
 import { ListCollaboratorController } from './infrastructure/api/list-collaborator/list-collaborator.controller';
 import { ListCollaboratorUseCase } from './application/list-collaborator-use-case/list-collaborator-use-case';
 import { ListRolCollaboratorController } from './infrastructure/api/list-rol-collaborator/list-rol-collaborator.controller';
-import { ListRolCollaboratorUseCase } from './application/list-rol-collaborator-use-case/list-rol-collaborator-use-case';
 import { ListWorkspaceController } from './infrastructure/api/list-workspace/list-workspace.controller';
 import { ListWorkspaceResource } from './infrastructure/api/list-workspace/list-workspace.resource';
 import { ListWorkspaceUseCase } from './application/list-workspace-use-case/list-workspace-use-case';
@@ -37,6 +36,7 @@ import RoleModel from './infrastructure/models/role.model';
 import RolePermissionModel from './infrastructure/models/role.permission.model';
 import UserModel from '@/user/infrastructure/models/user.model';
 import WorkspaceModel from './infrastructure/models/workspace.model';
+import { ListRoleCollaboratorUseCase } from './application/list-role-collaborator-use-case/list-role-collaborator-use-case';
 @Module({
   controllers: [
     CreateWorkspaceController,
@@ -66,7 +66,7 @@ import WorkspaceModel from './infrastructure/models/workspace.model';
     DeleteMemberUseCase,
     LinkWorkspaceUseCase,
     ListCollaboratorUseCase,
-    ListRolCollaboratorUseCase,
+    ListRoleCollaboratorUseCase,
     ListWorkspaceResource,
     ListWorkspaceUseCase,
     MemberMapper,
