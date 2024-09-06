@@ -12,7 +12,7 @@ export interface PrimitiveUser {
 }
 
 export class User {
-  constructor(private attributes: PrimitiveUser ) {}
+  constructor(private attributes: PrimitiveUser) {}
 
   static create(data: {
     id?: string;
@@ -32,6 +32,21 @@ export class User {
     });
   }
 
+  static update(
+    user: User,
+    data: Partial<{
+      name: string;
+      email: string;
+      password: string;
+      urlPhoto: string;
+    }>,
+  ): User {
+    const fields = Object.entries(data).filter(([, v]) => v);
+    return new User({
+      ...user.attributes,
+      ...Object.fromEntries(fields),
+    });
+  }
 
   toValue(): PrimitiveUser {
     return {

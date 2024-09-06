@@ -1,7 +1,7 @@
+import { UUID } from '@shared-decorators';
 import {
   Column,
   CreatedAt,
-  DataType,
   Model,
   PrimaryKey,
   Table,
@@ -10,10 +10,7 @@ import {
 @Table({ tableName: 'mnt_song', underscored: true })
 export default class SongModel extends Model<SongModel> {
   @PrimaryKey
-  @Column({
-    type: DataType.UUID,
-    defaultValue: DataType.UUIDV4,
-  })
+  @UUID
   id: string;
 
   @Column
