@@ -48,12 +48,9 @@ export class RelationalRequestHttpRepository extends RequestHttpRepository {
     return method;
   }
   async findMethodByName(name: string): Promise<Method | null> {
-    console.log('name', name);
     const resMethod = await this.methodModel.findOne({
       where: { name },
     });
-
-    console.log('resMethod', resMethod);
 
     if (!resMethod) return null;
 
