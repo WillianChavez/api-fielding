@@ -42,11 +42,9 @@ import { ListResourcesUseCase } from './applitacion/list-resources-use-case/list
       BodyModel,
       HeaderModel,
     ]),
-    SeederModule.forFeature([
-      SeedAuthorizationType,
-      SeedMethod,
-      SeedResourceType,
-    ]),
+    SeederModule.forFeature([SeedAuthorizationType]),
+    SeederModule.forFeature([SeedMethod]),
+    SeederModule.forFeature([SeedResourceType]),
   ],
   providers: [
     CreateHttpRequestUseCase,
