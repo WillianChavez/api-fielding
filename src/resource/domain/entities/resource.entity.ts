@@ -8,7 +8,7 @@ export interface CreateResource {
   name: string;
   description?: string;
   parentResourceId?: string;
-  resources?: Resource[];
+  resources?: PrimitiveResource[];
   workspaceId: string;
 }
 
@@ -35,8 +35,8 @@ export class Resource {
       name,
       description,
       parentResourceId,
-      resources,
       workspaceId,
+      resources: resources?.map((resource) => new Resource(resource).toValue()),
     });
   }
 

@@ -1,11 +1,13 @@
-import { Resource } from '@/resource/domain/entities';
+import { PrimitiveResource, Resource } from '@/resource/domain/entities';
 import { ResourceRepository } from '@/resource/domain/respositories';
 import { ListResourcesDto } from './list-resources.dto';
+import { Injectable } from '@shared-dependencies';
 
+@Injectable()
 export class ListResourcesUseCase {
   constructor(private resourceRepository: ResourceRepository) {}
 
-  async run(dto: ListResourcesDto): Promise<Resource[]> {
+  async run(dto: ListResourcesDto): Promise<PrimitiveResource[]> {
     const { workspaceId, typesResources } = dto;
     if (!workspaceId) {
       throw new Error('workspaceId is required');
@@ -23,6 +25,7 @@ export class ListResourcesUseCase {
       workspaceId,
       idTypesResource: resourcesTypeIds,
     });
-    return resources;
+
+    return resources.map((resource) => resource.toValue());
   }
 }

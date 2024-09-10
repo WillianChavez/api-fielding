@@ -2,7 +2,7 @@
 import { NestApplication, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { swaggerInit } from './config/swagger';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
@@ -16,6 +16,6 @@ async function bootstrap() {
   const url = configService.get<string>('url', 'http://localhost');
 
   await app.listen(port);
-  console.log(`Application is running on: ${url}`);
+  Logger.log(`Application is running on: ${url}/api`, 'Bootstrap');
 }
 bootstrap();
