@@ -21,6 +21,7 @@ export class CreateHttpRequestController {
         order: createHttpRequestHttpDto.order,
         resourceTypeName: 'request',
         workspaceId: createHttpRequestHttpDto.workspaceId,
+        parentResourceId: createHttpRequestHttpDto.parentResourceId,
       });
 
       return this.createHttpRequestUseCase.run({
