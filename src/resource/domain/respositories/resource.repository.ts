@@ -24,4 +24,9 @@ export abstract class ResourceRepository {
   abstract listResourcesType(filter: {
     name?: string[];
   }): Promise<ResourceType[]>;
+
+  abstract findOne(dto: {
+    id?: string;
+    resourceTypeNames?: ResourceTypeName[];
+  }): Promise<Resource | null>;
 }

@@ -1,11 +1,11 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { PROJECT_RESOURCE_ROUTE, RESOURCE_ROUTE } from '../../routes';
+import { PROJECT_RESOURCE_ROUTE } from '../../routes';
 import { ApiTags } from '@nestjs/swagger';
 import { ListResourcesUseCase } from '@/resource/applitacion/list-resources-use-case/list-resources-use-case';
 import { ListProjectResourcesHttpDto } from './list-project-resources.http.dto';
 
 @Controller(PROJECT_RESOURCE_ROUTE)
-@ApiTags(RESOURCE_ROUTE)
+@ApiTags(PROJECT_RESOURCE_ROUTE)
 export class ListProjectResourcesController {
   constructor(private readonly listResourceUseCase: ListResourcesUseCase) {}
 
