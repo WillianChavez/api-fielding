@@ -206,4 +206,53 @@ export class RelationalResourceRepository extends ResourceRepository {
 
     return resourceTypes;
   }
+
+  async findOne(dto: {
+    id?: string;
+    resourceTypeNames?: ResourceTypeName[];
+  }): Promise<Resource | null> {
+    const filter: {
+      id?: string;
+    } = {};
+
+    const filterResourceType: {
+      name?: {
+        [Op.in]: ResourceTypeName[];
+      };
+    } = {};
+
+    if (dto.id) {
+      filter.id = dto.id;
+    }
+
+    if (dto.resourceTypeNames) {
+      filterResourceType.name = {
+        [Op.in]: dto.resourceTypeNames,
+      };
+    }
+
+    const resResource = await this.resourceModel.findOne({
+      where: filter,
+      include: [
+        {
+          model: ResourceTypeModel,
+          as: 'resourceType',
+          where: filterResourceType,
+        },
+      ],
+    });
+
+    const resource = Resource.create({
+      id: resResource.id,
+      name: resResource.name,
+      order: resResource.order,
+      resourceType: ResourceType.create({
+        id: resResource.resourceType.id,
+        name: resResource.resourceType.name as ResourceTypeName,
+      }).toValue(),
+      workspaceId: resResource.workspaceId,
+    });
+
+    return resource;
+  }
 }
