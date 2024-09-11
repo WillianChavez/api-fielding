@@ -18,18 +18,14 @@ export class CreateHttpRequesHttpDto {
   @IsString()
   name: string;
 
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsUUID()
-  workspaceId: string;
-
   @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   url?: string;
 
   @ApiProperty({ required: false })
-  @IsOptional()
+  @IsUUID()
+  @IsNotEmpty()
   @IsString()
-  parentResourceId?: string;
+  parentResourceId: string;
 }

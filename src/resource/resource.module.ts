@@ -26,6 +26,8 @@ import { RelationalResourceRepository } from './infrastructure/repositories/rela
 import { RelationalRequestHttpRepository } from './infrastructure/repositories/relational.request-http.repository';
 import { ListProjectResourcesController } from './infrastructure/api/list-project-resources/list-project-resources.controller';
 import { ListResourcesUseCase } from './applitacion/list-resources-use-case/list-resources-use-case';
+import { CreateProjectController } from './infrastructure/api/create-project/create-project.controller';
+import { FindResourceUseCase } from './applitacion/find-resource-use-case/find-resource-use-case';
 
 @Module({
   imports: [
@@ -50,6 +52,7 @@ import { ListResourcesUseCase } from './applitacion/list-resources-use-case/list
     CreateHttpRequestUseCase,
     CreateResourceUseCase,
     ListResourcesUseCase,
+    FindResourceUseCase,
     RelationalResourceRepository,
     RelationalRequestHttpRepository,
     {
@@ -61,6 +64,10 @@ import { ListResourcesUseCase } from './applitacion/list-resources-use-case/list
       useExisting: RelationalRequestHttpRepository,
     },
   ],
-  controllers: [CreateHttpRequestController, ListProjectResourcesController],
+  controllers: [
+    CreateHttpRequestController,
+    ListProjectResourcesController,
+    CreateProjectController,
+  ],
 })
 export class ResourceModule {}
