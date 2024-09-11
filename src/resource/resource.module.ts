@@ -28,6 +28,8 @@ import { ListProjectResourcesController } from './infrastructure/api/list-projec
 import { ListResourcesUseCase } from './applitacion/list-resources-use-case/list-resources-use-case';
 import { CreateProjectController } from './infrastructure/api/create-project/create-project.controller';
 import { FindResourceUseCase } from './applitacion/find-resource-use-case/find-resource-use-case';
+import { JoinUserActiveUseCase } from './applitacion/join-user-active-use-case/join-user-active-use-case';
+import { GatewaySocket } from './infrastructure/real-time/gateway/gateway.socket';
 
 @Module({
   imports: [
@@ -53,8 +55,10 @@ import { FindResourceUseCase } from './applitacion/find-resource-use-case/find-r
     CreateResourceUseCase,
     ListResourcesUseCase,
     FindResourceUseCase,
+    JoinUserActiveUseCase,
     RelationalResourceRepository,
     RelationalRequestHttpRepository,
+    GatewaySocket,
     {
       provide: ResourceRepository,
       useExisting: RelationalResourceRepository,
