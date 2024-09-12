@@ -65,6 +65,7 @@ export class GatewaySocket implements OnModuleInit {
     const activeUsers = await this.listUsersActiveUseCase.run({ workspaceId });
     this.server.to(workspaceId).emit('active-users', activeUsers);
 
+    socket.leave(workspaceId);
     socket.disconnect();
   }
 }
