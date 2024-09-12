@@ -1,24 +1,16 @@
 import { Injectable } from '@shared-dependencies';
 import { JoinUserActiveDto } from './join-user-active.dto';
+import { UserActiveRepository } from '@/resource/domain/respositories/user-active.repository';
+import { ActiveUser } from '@/resource/domain/entities/active-user.entity';
 
 @Injectable()
 export class JoinUserActiveUseCase {
-  private activesUsers: JoinUserActiveDto[] = [];
-  async run(
-    joinUserActiveDto: JoinUserActiveDto,
-  ): Promise<JoinUserActiveDto[]> {
-    const { workspaceId, id } = joinUserActiveDto;
+  constructor(private readonly userActiveRepository: UserActiveRepository) {}
+  async run(joinUserActiveDto: JoinUserActiveDto) {
+    const user = ActiveUser.create(joinUserActiveDto);
 
-    const user = this.activesUsers.find(
-      (user) => user.id === id && user.workspaceId === workspaceId,
-    );
+    const userCreated = await this.userActiveRepository.create(user);
 
-    const filterWorkspace = (user) => user.workspaceId === workspaceId;
-
-    if (user) return this.activesUsers.filter(filterWorkspace);
-
-    this.activesUsers.push(joinUserActiveDto);
-
-    return this.activesUsers.filter(filterWorkspace);
+    return userCreated.toValue();
   }
 }
