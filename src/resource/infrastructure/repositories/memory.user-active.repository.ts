@@ -5,15 +5,12 @@ export class MemoryUserActiveRepository extends UserActiveRepository {
   private activesUsers: Map<string, ActiveUser[]> = new Map();
 
   async create(resource: ActiveUser): Promise<ActiveUser> {
-    const { workspaceId, id } = resource.toValue();
+    const { workspaceId } = resource.toValue();
 
     const usersInWorkspace = this.activesUsers.get(workspaceId) || [];
 
-    const userExist = usersInWorkspace.find((user) => user.toValue().id === id);
-
-    if (userExist) this.deleteByUser(workspaceId, id);
-
     usersInWorkspace.push(resource);
+
     this.activesUsers.set(workspaceId, usersInWorkspace);
 
     return resource;
@@ -41,5 +38,11 @@ export class MemoryUserActiveRepository extends UserActiveRepository {
 
   async findAllById(id: string): Promise<ActiveUser[]> {
     return this.activesUsers.get(id) || [];
+  }
+
+  async find(id: string, userId: string): Promise<ActiveUser> {
+    const usersInWorkspace = this.activesUsers.get(id) || [];
+
+    return usersInWorkspace.find((user) => user.toValue().id === userId);
   }
 }
