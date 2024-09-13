@@ -1,6 +1,7 @@
 import { registerAs } from '@nestjs/config';
 import { Dialect } from './dialect';
 import { MailerOptions } from '@nestjs-modules/mailer';
+import { Logger } from '@nestjs/common';
 
 export default registerAs('', () => ({
   host: process.env.HOST,
@@ -17,7 +18,7 @@ export default registerAs('', () => ({
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    logging: process.env.DB_LOGGER !== 'false' ? console.log : false,
+    logging: process.env.DB_LOGGER !== 'false' ? Logger.log : false,
   },
   mailer: {
     transport: {

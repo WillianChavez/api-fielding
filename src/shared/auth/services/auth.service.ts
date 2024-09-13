@@ -22,4 +22,7 @@ export class AuthService extends UserService {
     const token = this.jwtService.sign(payload);
     return token;
   }
+  // async createRefreshToken(userId: string): Promise<string> {
+  //   return false;
+  // }
 }

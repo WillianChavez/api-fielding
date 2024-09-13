@@ -1,4 +1,9 @@
-import { Resource, ResourceType, Request } from '@/resource/domain/entities';
+import {
+  Resource,
+  ResourceType,
+  Request,
+  PrimitiveResource,
+} from '@/resource/domain/entities';
 import { ResourceRepository } from '@/resource/domain/respositories';
 import { InjectModel } from '@nestjs/sequelize';
 import { Injectable } from '@shared-dependencies';
@@ -112,17 +117,34 @@ export class RelationalResourceRepository extends ResourceRepository {
 
   async list(filter: {
     workspaceId: string;
-    typesResourceIds?: string[];
+    idTypesResource?: string[];
   }): Promise<Resource[]> {
     const resResources = await this.resourceModel.findAll({
       where: {
-        resourceTypeId: filter?.typesResourceIds,
         workspaceId: filter.workspaceId,
+        resourceTypeId: {
+          [Op.in]: filter?.idTypesResource,
+        },
+        parentResourceId: null,
       },
       include: [
         {
           model: ResourceTypeModel,
           as: 'resourceType',
+        },
+        {
+          model: ResourceModel,
+          as: 'children',
+          include: [
+            {
+              model: ResourceModel,
+              as: 'children',
+            },
+            {
+              model: ResourceTypeModel,
+              as: 'resourceType',
+            },
+          ],
         },
       ],
     });
@@ -132,16 +154,36 @@ export class RelationalResourceRepository extends ResourceRepository {
         id: resResource.id,
         name: resResource.name,
         order: resResource.order,
-        workspaceId: resResource.workspaceId,
-        parentResourceId: resResource.parentResourceId,
         resourceType: ResourceType.create({
           id: resResource.resourceType.id,
           name: resResource.resourceType.name as ResourceTypeName,
         }).toValue(),
+        workspaceId: resResource.workspaceId,
+        parentResourceId: resResource.parentResourceId,
+        resources: resResource.children?.map((resource) =>
+          this.createPrimitiveResource(resource),
+        ),
       });
     });
 
     return resources;
+  }
+
+  private createPrimitiveResource(resource: ResourceModel): PrimitiveResource {
+    return {
+      id: resource.id,
+      name: resource.name,
+      order: resource.order,
+      workspaceId: resource.workspaceId,
+      parentResourceId: resource.parentResourceId,
+      resourceType: ResourceType.create({
+        id: resource.resourceType.id,
+        name: resource.resourceType.name as ResourceTypeName,
+      }).toValue(),
+      resources: resource.children?.map((resource) =>
+        this.createPrimitiveResource(resource),
+      ),
+    };
   }
 
   async listResourcesType(filter: {
@@ -163,5 +205,54 @@ export class RelationalResourceRepository extends ResourceRepository {
     });
 
     return resourceTypes;
+  }
+
+  async findOne(dto: {
+    id?: string;
+    resourceTypeNames?: ResourceTypeName[];
+  }): Promise<Resource | null> {
+    const filter: {
+      id?: string;
+    } = {};
+
+    const filterResourceType: {
+      name?: {
+        [Op.in]: ResourceTypeName[];
+      };
+    } = {};
+
+    if (dto.id) {
+      filter.id = dto.id;
+    }
+
+    if (dto.resourceTypeNames) {
+      filterResourceType.name = {
+        [Op.in]: dto.resourceTypeNames,
+      };
+    }
+
+    const resResource = await this.resourceModel.findOne({
+      where: filter,
+      include: [
+        {
+          model: ResourceTypeModel,
+          as: 'resourceType',
+          where: filterResourceType,
+        },
+      ],
+    });
+
+    const resource = Resource.create({
+      id: resResource.id,
+      name: resResource.name,
+      order: resResource.order,
+      resourceType: ResourceType.create({
+        id: resResource.resourceType.id,
+        name: resResource.resourceType.name as ResourceTypeName,
+      }).toValue(),
+      workspaceId: resResource.workspaceId,
+    });
+
+    return resource;
   }
 }

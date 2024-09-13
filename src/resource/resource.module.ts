@@ -24,6 +24,10 @@ import {
 } from './domain/respositories';
 import { RelationalResourceRepository } from './infrastructure/repositories/relational.resource.repository';
 import { RelationalRequestHttpRepository } from './infrastructure/repositories/relational.request-http.repository';
+import { ListProjectResourcesController } from './infrastructure/api/list-project-resources/list-project-resources.controller';
+import { ListResourcesUseCase } from './applitacion/list-resources-use-case/list-resources-use-case';
+import { CreateProjectController } from './infrastructure/api/create-project/create-project.controller';
+import { FindResourceUseCase } from './applitacion/find-resource-use-case/find-resource-use-case';
 
 @Module({
   imports: [
@@ -40,15 +44,15 @@ import { RelationalRequestHttpRepository } from './infrastructure/repositories/r
       BodyModel,
       HeaderModel,
     ]),
-    SeederModule.forFeature([
-      SeedAuthorizationType,
-      SeedMethod,
-      SeedResourceType,
-    ]),
+    SeederModule.forFeature([SeedAuthorizationType]),
+    SeederModule.forFeature([SeedMethod]),
+    SeederModule.forFeature([SeedResourceType]),
   ],
   providers: [
     CreateHttpRequestUseCase,
     CreateResourceUseCase,
+    ListResourcesUseCase,
+    FindResourceUseCase,
     RelationalResourceRepository,
     RelationalRequestHttpRepository,
     {
@@ -60,6 +64,10 @@ import { RelationalRequestHttpRepository } from './infrastructure/repositories/r
       useExisting: RelationalRequestHttpRepository,
     },
   ],
-  controllers: [CreateHttpRequestController],
+  controllers: [
+    CreateHttpRequestController,
+    ListProjectResourcesController,
+    CreateProjectController,
+  ],
 })
 export class ResourceModule {}

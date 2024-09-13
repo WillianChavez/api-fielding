@@ -1,27 +1,33 @@
-// /* eslint-disable prettier/prettier */
-// import { v4 as uuidv4 } from 'uuid';
+/* eslint-disable prettier/prettier */
+import { v4 as uuidv4 } from 'uuid';
 
-// export interface RefreshToken {
-//   id: string;
-//   name: string;
-//   exp: Date;
-//   token: string;
-//   isValide: boolean;
-// }
+export interface RefreshTokenPrimitive {
+  id: string;
+  user: string;
+  name?: string;
+  exp: Date;
+  token: string;
+  isValide?: boolean;
+}
 
-// export class User {
-//   constructor(private attributes: RefreshToken) {}
+export class RefreshToken {
+  constructor(private attributes: RefreshTokenPrimitive) {}
 
-//   static create(data: {
-//     id?: string;
-//     name: string;
-//     email: string;
-//     password: string;
-//     urlPhoto?: string;
-//   }) {
-//     return new User({
-//       id: data.id ?? uuidv4(),
-//       name: data.name,
-//     });
-//   }
-// }
+  static create(data: {
+    id?: string;
+    user: string;
+    name?: string;
+    exp: Date;
+    token: string;
+    isValide?: boolean;
+  }) {
+    return new RefreshToken({
+      id: data.id ?? uuidv4(),
+      user: data.user,
+      name: data.name ?? null,
+      exp: data.exp,
+      token: data.token,
+      isValide: data.isValide ?? false,
+    });
+  }
+}
