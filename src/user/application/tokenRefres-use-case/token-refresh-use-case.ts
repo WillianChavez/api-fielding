@@ -1,41 +1,23 @@
-// // application/use-cases/create-tokens.use-case.ts
-// export class CreateTokenUseCase {
-//   constructor(private tokenRepository: ITokenRepository) {}
+// import { JwtPayload } from '@/shared/auth/interface/jwt-payload.interface';
+// import { RefreshToken } from '@/user/domain/entities/refresh-token.entity';
+// import { RefreshTokenRepository } from '@/user/domain/repositories/refreshToken.repository';
 
-//   async execute(
-//     userId: string,
-//   ): Promise<{ token: Token; refreshToken: RefreshToken }> {
-//     const token = new Token(uuidv4(), userId, new Date(Date.now() + 3600000)); // 1 hora
-//     const refreshToken = new RefreshToken(
-//       uuidv4(),
-//       userId,
-//       new Date(Date.now() + 604800000),
-//     ); // 1 semana
-
-//     await this.tokenRepository.saveToken(token);
-//     await this.tokenRepository.saveRefreshToken(refreshToken);
-
-//     return { token, refreshToken };
-//   }
-// }
-
-// // application/use-cases/refresh-token.use-case.ts
 // export class RefreshTokenUseCase {
-//   constructor(private tokenRepository: ITokenRepository) {}
+//   constructor(private tokenRepository: RefreshTokenRepository) {}
 
-//   async execute(refreshTokenId: string): Promise<Token | null> {
+//   async execute(refreshTokenId: string): Promise<JwtPayload | null> {
 //     const refreshToken =
 //       await this.tokenRepository.findRefreshTokenById(refreshTokenId);
 
-//     if (!refreshToken || refreshToken.expiresAt < new Date()) {
+//     if (!refreshToken) {
 //       return null;
 //     }
 
-//     const newToken = new Token(
-//       uuidv4(),
-//       refreshToken.userId,
-//       new Date(Date.now() + 3600000),
-//     );
+//     const newToken = RefreshToken.create({
+//       id: refreshToken.id,
+//       user: refreshToken.userId,
+//       exp: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30)
+//     });
 //     await this.tokenRepository.saveToken(newToken);
 
 //     return newToken;

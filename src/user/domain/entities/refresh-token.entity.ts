@@ -1,33 +1,31 @@
-/* eslint-disable prettier/prettier */
 import { v4 as uuidv4 } from 'uuid';
-
 export interface RefreshTokenPrimitive {
   id: string;
   user: string;
   name?: string;
   exp: Date;
-  token: string;
-  isValide?: boolean;
+  token?: string;
+  isValid?: boolean;
 }
 
 export class RefreshToken {
   constructor(private attributes: RefreshTokenPrimitive) {}
 
   static create(data: {
-    id?: string;
+    id: string;
     user: string;
     name?: string;
     exp: Date;
     token: string;
-    isValide?: boolean;
-  }) {
+    isValid?: boolean;
+  }): RefreshToken {
     return new RefreshToken({
       id: data.id ?? uuidv4(),
       user: data.user,
-      name: data.name ?? null,
+      name: data.name,
       exp: data.exp,
-      token: data.token,
-      isValide: data.isValide ?? false,
+      token: data.token ?? null,
+      isValid: data.isValid ?? false,
     });
   }
 }
