@@ -20,6 +20,10 @@ export class Environment {
     });
   }
 
+  static from(data: PrimitiveEnvironment): Environment {
+    return new Environment(data);
+  }
+
   toValue(): PrimitiveEnvironment {
     return this.attributes;
   }

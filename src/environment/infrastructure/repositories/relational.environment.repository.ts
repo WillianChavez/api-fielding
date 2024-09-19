@@ -32,10 +32,10 @@ export class RelationalEnvironmentRepository extends EnvironmentRepository {
 
     if (!environmentModel || !collaboratorModel) return null;
 
-    return new Environment({
+    return Environment.from({
       id: environmentModel.id,
       name: environmentModel.name,
-      collaborator: new EnvironmentUser({
+      collaborator: EnvironmentUser.from({
         id: collaboratorModel.id,
         userId: collaboratorModel.user_id,
       }).toValue(),

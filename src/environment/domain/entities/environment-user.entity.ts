@@ -15,6 +15,10 @@ export class EnvironmentUser {
     });
   }
 
+  static from(data: PrimitiveEnvironmentUser): EnvironmentUser {
+    return new EnvironmentUser(data);
+  }
+
   toValue(): PrimitiveEnvironmentUser {
     return this.attributes;
   }
