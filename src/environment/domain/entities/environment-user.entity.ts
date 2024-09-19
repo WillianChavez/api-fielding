@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from 'uuid';
 export interface PrimitiveEnvironmentUser {
   id: string;
   userId: string;
-  environmentId?: string;
 }
 
 export class EnvironmentUser {
@@ -13,7 +12,6 @@ export class EnvironmentUser {
     return new EnvironmentUser({
       id: uuidv4(),
       userId: data.userId,
-      environmentId: data.environmentId,
     });
   }
 
