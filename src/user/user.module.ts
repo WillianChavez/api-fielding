@@ -38,5 +38,6 @@ import { EditUserResource } from './infrastructure/api/edit-user/edit-user.resou
     },
   ],
   imports: [SequelizeModule.forFeature([UserModel]), AuthModule],
+  exports: [UserRepository],
 })
 export class UserModule {}
