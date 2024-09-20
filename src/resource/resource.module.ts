@@ -28,6 +28,13 @@ import { ListProjectResourcesController } from './infrastructure/api/list-projec
 import { ListResourcesUseCase } from './applitacion/list-resources-use-case/list-resources-use-case';
 import { CreateProjectController } from './infrastructure/api/create-project/create-project.controller';
 import { FindResourceUseCase } from './applitacion/find-resource-use-case/find-resource-use-case';
+import { JoinUserActiveUseCase } from './applitacion/join-user-active-use-case/join-user-active-use-case';
+import { GatewaySocket } from './infrastructure/real-time/gateway/gateway.socket';
+import { UserActiveRepository } from './domain/respositories/user-active.repository';
+import { MemoryUserActiveRepository } from './infrastructure/repositories/memory.user-active.repository';
+import { RemoveUserActiveUseCase } from './applitacion/remove-user-active-use-case/remove-user-active-use-case';
+import { ListUsersActiveUseCase } from './applitacion/list-users-active-use-case/list-users-active-use-case';
+import { WsAuthMiddleware } from './infrastructure/real-time/middleware/ws-auth.middleware';
 
 @Module({
   imports: [
@@ -49,12 +56,18 @@ import { FindResourceUseCase } from './applitacion/find-resource-use-case/find-r
     SeederModule.forFeature([SeedResourceType]),
   ],
   providers: [
+    WsAuthMiddleware,
     CreateHttpRequestUseCase,
     CreateResourceUseCase,
     ListResourcesUseCase,
     FindResourceUseCase,
+    JoinUserActiveUseCase,
+    RemoveUserActiveUseCase,
+    ListUsersActiveUseCase,
     RelationalResourceRepository,
     RelationalRequestHttpRepository,
+    MemoryUserActiveRepository,
+    GatewaySocket,
     {
       provide: ResourceRepository,
       useExisting: RelationalResourceRepository,
@@ -62,6 +75,10 @@ import { FindResourceUseCase } from './applitacion/find-resource-use-case/find-r
     {
       provide: RequestHttpRepository,
       useExisting: RelationalRequestHttpRepository,
+    },
+    {
+      provide: UserActiveRepository,
+      useExisting: MemoryUserActiveRepository,
     },
   ],
   controllers: [
