@@ -98,6 +98,7 @@ import { ListRoleCollaboratorUseCase } from './application/list-role-collaborato
     CreateWorkspaceUseCase,
     ListCollaboratorUseCase,
     DeleteMemberUseCase,
+    WorkspaceRepository,
   ],
 })
 export class WorkspaceModule {}

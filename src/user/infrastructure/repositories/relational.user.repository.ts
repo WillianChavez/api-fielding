@@ -28,7 +28,7 @@ export class RelationalUserRepository extends UserRepository {
       where: {
         email,
         id: {
-          [Op.ne]: ignore,
+          [Op.ne]: ignore || null,
         },
       },
     });
