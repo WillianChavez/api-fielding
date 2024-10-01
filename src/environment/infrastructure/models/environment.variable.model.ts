@@ -35,9 +35,12 @@ export default class EnvironmentVariableModel extends Model<EnvironmentVariableM
   @Column
   global_value?: string;
 
+  @Column({ defaultValue: true })
+  active?: boolean;
+
   @ForeignKey(() => EnvironmentModel)
   @UUID
-  environmentId: string;
+  environment_id: string;
 
   @BelongsTo(() => EnvironmentModel)
   environment: EnvironmentModel;
