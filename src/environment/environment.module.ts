@@ -12,6 +12,8 @@ import CollaboratorModel from '@/workspace/infrastructure/models/collaborator.mo
 import ResourceModel from '@/resource/infrastructure/models/resource.model';
 import EnvironmentResourceModel from './infrastructure/models/environment.resource.model';
 import EnvironmentCollaboratorModel from './infrastructure/models/environment.collaborator.model';
+import { AddVariableController } from './infrastructure/api/add-variable/add-variable.controller';
+import { AddVariableUseCase } from './application/add-variable-use-case/add-variable-use-case';
 
 @Module({
   imports: [
@@ -26,8 +28,9 @@ import EnvironmentCollaboratorModel from './infrastructure/models/environment.co
       EnvironmentCollaboratorModel,
     ]),
   ],
-  controllers: [CreateEnvironmentUserController],
+  controllers: [CreateEnvironmentUserController, AddVariableController],
   providers: [
+    AddVariableUseCase,
     CreateEnvironmentUserUseCase,
     RelationalEnvironmentRepository,
     {

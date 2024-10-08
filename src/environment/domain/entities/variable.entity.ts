@@ -5,19 +5,28 @@ export interface PrimitiveVariable {
   initialValue: string;
   currentValue?: string;
   globalValue?: string;
+  active?: boolean;
 }
 
 export class Variable {
   constructor(private attributes: PrimitiveVariable) {}
 
   static create({
-    id = uuidv4(),
+    id,
     name,
     initialValue,
     currentValue,
     globalValue,
-  }: PrimitiveVariable): Variable {
-    return new Variable({ id, name, initialValue, currentValue, globalValue });
+    active,
+  }: Omit<PrimitiveVariable, 'id'> & { id?: string }): Variable {
+    return new Variable({
+      id: id ?? uuidv4(),
+      name,
+      initialValue,
+      currentValue,
+      globalValue,
+      active: active ?? true,
+    });
   }
 
   toValue(): PrimitiveVariable {
